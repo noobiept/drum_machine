@@ -1,0 +1,12 @@
+bass drum: 
+    https://www.freesound.org/people/biodegry/sounds/34498/
+    Creative Commons Attribution 3.0 Unported 
+    http://creativecommons.org/licenses/by/3.0/
+    
+snare: 
+    https://www.freesound.org/people/kaonaya/sounds/131363/
+    http://creativecommons.org/publicdomain/zero/1.0/
+    
+hi-hat:
+    https://www.freesound.org/people/PSYCHO%20BOOMER/sounds/42548/
+    http://creativecommons.org/publicdomain/zero/1.0/
