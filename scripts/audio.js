@@ -11,6 +11,7 @@ var CALLBACK = null;
 
 var AUDIO_BUFFERS = {};
 var CONTEXT = null;
+var GAIN = 1;
 
 Audio.load = function( callback, baseUrl )
 {
@@ -21,11 +22,6 @@ if ( context == null )
     return;
     }
 
-var source = context.createBufferSource();
-var gain = context.createGain();
-
-source.connect( gain );
-gain.connect( context.destination );
 
 CONTEXT = context;
 CALLBACK = callback;
@@ -64,7 +60,10 @@ request.onload = function()
 
         if ( SOUNDS_LOADED >= MANIFEST.length )
             {
-            CALLBACK();
+            if ( CALLBACK )
+                {
+                CALLBACK();
+                }
             }
 
         }, onError);
@@ -76,9 +75,14 @@ request.send();
 Audio.playSound = function( buffer, time )
 {
 var source = CONTEXT.createBufferSource();
+var gainNode = CONTEXT.createGain();
 
 source.buffer = buffer;
-source.connect( CONTEXT.destination );
+gainNode.gain.value = GAIN;
+
+source.connect( gainNode );
+gainNode.connect( CONTEXT.destination );
+
 source.start( time );
 };
 
@@ -117,6 +121,18 @@ return context;
 Audio.getCurrentTime = function()
 {
 return CONTEXT.currentTime;
+};
+
+
+Audio.setGain = function( gain )
+{
+GAIN = gain;
+};
+
+
+Audio.getGain = function()
+{
+return GAIN;
 };
 
 

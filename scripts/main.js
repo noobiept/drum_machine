@@ -3,8 +3,34 @@ var BASE_URL = '';
 
 window.onload = function()
 {
-Audio.load( start, BASE_URL );
+Audio.load( init, BASE_URL );
 };
+
+
+function init()
+{
+var play = document.querySelector( '#Play' );
+var volume = document.querySelector( '#Volume' );
+var volumeValue = document.querySelector( '#VolumeValue' );
+
+var gain = Audio.getGain();
+
+volume.value = gain;
+volumeValue.innerHTML = gain;
+
+volume.onchange = function( event )
+    {
+    Audio.setGain( volume.value );
+
+    volumeValue.innerHTML = volume.value;
+    };
+
+play.onclick = function()
+    {
+    start();
+    };
+}
+
 
 
 function start()
