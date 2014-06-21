@@ -10,6 +10,7 @@ var SOUNDS_LOADED = 0;
 var CALLBACK = null;
 
 var AUDIO_BUFFERS = {};
+var AUDIO_SOURCES = [];
 var CONTEXT = null;
 var GAIN = 1;
 
@@ -78,13 +79,41 @@ var source = CONTEXT.createBufferSource();
 var gainNode = CONTEXT.createGain();
 
 source.buffer = buffer;
+source.onended = removeAudioSource;
 gainNode.gain.value = GAIN;
 
 source.connect( gainNode );
 gainNode.connect( CONTEXT.destination );
 
 source.start( time );
+
+AUDIO_SOURCES.push( source );
 };
+
+
+function removeAudioSource( event )
+{
+var source = event.srcElement;
+
+var position = AUDIO_SOURCES.indexOf( source );
+
+AUDIO_SOURCES.splice( position, 1 );
+}
+
+
+Audio.stop = function()
+{
+for (var a = 0 ; a < AUDIO_SOURCES.length ; a++)
+    {
+    var source = AUDIO_SOURCES[ a ];
+
+    source.stop();
+    }
+
+AUDIO_SOURCES.length = 0;
+};
+
+
 
 
 Audio.get = function( sound )
