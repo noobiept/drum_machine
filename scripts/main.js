@@ -1,7 +1,19 @@
 var BASE_URL = '';
 
-var TEMPO = 80;
 var INTERVAL_F;
+
+var INFO = {
+    DIVISIONS: 8,
+    TEMPO: 80
+};
+
+var BEAT = {
+    bass  : [ 1, 0, 0, 0, 1, 0, 0, 0 ],
+    snare : [ 0, 0, 1, 0, 0, 0, 1, 0 ],
+    hi_hat: [ 1, 1, 1, 1, 1, 1, 1, 1 ]
+};
+
+var COMPONENTS = [];
 
 window.onload = function()
 {
@@ -12,80 +24,57 @@ Audio.load( init, BASE_URL );
 
 function init()
 {
-var play = document.querySelector( '#Play' );
-var volume = document.querySelector( '#Volume' );
-var volumeValue = document.querySelector( '#VolumeValue' );
+Menu.init();
 
-var gain = Audio.getGain();
+var rows = document.querySelectorAll( '.ComponentRow' );
 
-volume.value = gain;
-volumeValue.innerHTML = gain;
-
-volume.onchange = function( event )
+for (var a = 0 ; a < rows.length ; a++)
     {
-    Audio.setGain( volume.value );
+    var row = rows[ a ];
 
-    volumeValue.innerHTML = volume.value;
-    };
+    for (var b = 0 ; b < INFO.DIVISIONS ; b++)
+        {
+        var data = document.createElement( 'td' );
 
-var isPlaying = false;
-play.innerHTML = 'Play';
+        data.innerHTML = '-';
 
-play.onclick = function()
+        row.appendChild( data );
+        }
+    }
+
+
+var componentsName = [ 'bass', 'snare', 'hi_hat' ];
+
+for (var a = 0 ; a < componentsName.length ; a++)
     {
-    if ( isPlaying )
-        {
-        play.innerHTML = 'Play';
-        isPlaying = false;
-        stop();
-        }
+    var name = componentsName[ a ];
 
-    else
-        {
-        isPlaying = true;
-        play.innerHTML = 'Stop';
-
-        var tempo = TEMPO;
-
-            // bar of 4
-        var interval = 60 / tempo * 4 * 1000;
-
-        INTERVAL_F = window.setInterval( start, interval );
-        start();
-        }
-    };
+    COMPONENTS.push( new Component( name, BEAT[ name ] ) );
+    }
 }
+
 
 
 
 function start()
 {
-var startTime = Audio.getCurrentTime();
-var tempo = TEMPO;     // beats per minute
-var quarterNoteTime = (60 / tempo);
-var eighthNoteTime = quarterNoteTime / 2;
-var sixteenthNoteTime = eighthNoteTime / 2;
-
-var bass = Audio.get( 'bass' );
-var hi_hat = Audio.get( 'hi_hat' );
-var snare = Audio.get( 'snare' );
-
-    // Play the bass drum on beats 1, 5
-Audio.playSound( bass, startTime );
-Audio.playSound( bass, startTime + 4 * eighthNoteTime );
-
-    // Play the snare drum on beats 3, 7
-Audio.playSound( snare, startTime + 2 * eighthNoteTime );
-Audio.playSound( snare, startTime + 6 * eighthNoteTime );
-
-    // Play the hi-hat every eighth note.
-for (var a = 0 ; a < 8 ; a++)
+for (var a = 0 ; a < COMPONENTS.length ; a++)
     {
-    Audio.playSound( hi_hat, startTime + a * eighthNoteTime );
+    COMPONENTS[ a ].playSounds();
     }
-
 }
 
+
+function playAgain()
+{
+var tempo = INFO.TEMPO;
+
+    // bar of 4
+var interval = 60 / tempo * 4 * 1000;
+
+INTERVAL_F = window.setInterval( start, interval );
+start();
+}
 
 
 function stop()
