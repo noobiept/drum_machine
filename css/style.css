@@ -2,3 +2,24 @@
     {
     cursor: pointer;
     }
+
+.ComponentRow td
+    {
+    cursor: pointer;
+    }
+
+#DrumTable
+    {
+    border-collapse: collapse;
+    }
+
+#DrumTable tr:nth-child(even)
+    {
+    background-color: rgba(158, 213, 237, 0.5);
+    }
+
+#DrumTable td, #DrumTable th
+    {
+    border: 1px solid black;
+    padding: 10px;
+    }

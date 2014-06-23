@@ -26,30 +26,20 @@ function init()
 {
 Menu.init();
 
-var rows = document.querySelectorAll( '.ComponentRow' );
+var componentsInfo = [
+    { name: 'bass', row: document.querySelector( '#BassRow' ) },
+    { name: 'snare', row: document.querySelector( '#SnareRow' ) },
+    { name: 'hi_hat', row: document.querySelector( '#HiHatRow' ) }
+];
 
-for (var a = 0 ; a < rows.length ; a++)
+
+for (var a = 0 ; a < componentsInfo.length ; a++)
     {
-    var row = rows[ a ];
+    var info = componentsInfo[ a ];
+    var name = info.name;
+    var row = info.row;
 
-    for (var b = 0 ; b < INFO.DIVISIONS ; b++)
-        {
-        var data = document.createElement( 'td' );
-
-        data.innerHTML = '-';
-
-        row.appendChild( data );
-        }
-    }
-
-
-var componentsName = [ 'bass', 'snare', 'hi_hat' ];
-
-for (var a = 0 ; a < componentsName.length ; a++)
-    {
-    var name = componentsName[ a ];
-
-    COMPONENTS.push( new Component( name, BEAT[ name ] ) );
+    COMPONENTS.push( new Component( name, BEAT[ name ], row ) );
     }
 }
 
