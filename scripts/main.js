@@ -57,6 +57,8 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
 
 function playAgain()
 {
+stop();
+
 var tempo = INFO.TEMPO;
 
     // bar of 4
