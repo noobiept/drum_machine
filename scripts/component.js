@@ -8,6 +8,7 @@ this.audio = Audio.get( name );
 this.beat = beat;
 this.row = row;
 
+
 for (var a = 0 ; a < INFO.DIVISIONS ; a++)
     {
     var data = document.createElement( 'td' );

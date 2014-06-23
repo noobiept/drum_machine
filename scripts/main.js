@@ -8,9 +8,15 @@ var INFO = {
 };
 
 var BEAT = {
-    bass  : [ 1, 0, 0, 0, 1, 0, 0, 0 ],
-    snare : [ 0, 0, 1, 0, 0, 0, 1, 0 ],
-    hi_hat: [ 1, 1, 1, 1, 1, 1, 1, 1 ]
+    crash      : [ 1, 0, 0, 0, 1, 0, 0, 0 ],
+    splash     : [ 0, 0, 0, 1, 0, 0, 0, 1 ],
+    ride       : [ 1, 0, 1, 0, 1, 0, 1, 0 ],
+    hi_hat     : [ 1, 1, 1, 1, 1, 1, 1, 1 ],
+    snare      : [ 0, 0, 1, 0, 0, 0, 1, 0 ],
+    tom_high   : [ 1, 0, 0, 0, 0, 0, 0, 0 ],
+    tom_medium : [ 0, 1, 0, 0, 0, 0, 0, 0 ],
+    tom_low    : [ 0, 0, 0, 0, 0, 0, 0, 1 ],
+    bass       : [ 1, 0, 0, 0, 1, 0, 0, 0 ]
 };
 
 var COMPONENTS = [];
@@ -27,9 +33,15 @@ function init()
 Menu.init();
 
 var componentsInfo = [
-    { name: 'bass', row: document.querySelector( '#BassRow' ) },
+    { name: 'crash', row: document.querySelector( '#CrashRow' ) },
+    { name: 'splash', row: document.querySelector( '#SplashRow' ) },
+    { name: 'ride', row: document.querySelector( '#RideRow' ) },
+    { name: 'hi_hat', row: document.querySelector( '#HiHatRow' ) },
     { name: 'snare', row: document.querySelector( '#SnareRow' ) },
-    { name: 'hi_hat', row: document.querySelector( '#HiHatRow' ) }
+    { name: 'tom_high', row: document.querySelector( '#HighTomRow' ) },
+    { name: 'tom_medium', row: document.querySelector( '#MediumTomRow' ) },
+    { name: 'tom_low', row: document.querySelector( '#LowTomRow' ) },
+    { name: 'bass', row: document.querySelector( '#BassRow' ) }
 ];
 
 

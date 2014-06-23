@@ -28,9 +28,16 @@ CONTEXT = context;
 CALLBACK = callback;
 
 MANIFEST = [
-        { id: 'bass', src: baseUrl + 'sounds/bass.wav' },
-        { id: 'snare', src: baseUrl + 'sounds/snare.wav' },
-        { id: 'hi_hat', src: baseUrl + 'sounds/hi_hat.wav' }
+        { id: 'bass', src: baseUrl + 'sounds/bass.ogg' },
+        { id: 'snare', src: baseUrl + 'sounds/snare.ogg' },
+        { id: 'hi_hat', src: baseUrl + 'sounds/cymbal_hi_hat.ogg' },
+        { id: 'crash', src: baseUrl + 'sounds/cymbal_crash.ogg' },
+        { id: 'ride', src: baseUrl + 'sounds/cymbal_ride.ogg' },
+        { id: 'splash', src: baseUrl + 'sounds/cymbal_splash.ogg' },
+        { id: 'tom_floor', src: baseUrl + 'sounds/tom_floor.ogg' },
+        { id: 'tom_high', src: baseUrl + 'sounds/tom_high.ogg' },
+        { id: 'tom_low', src: baseUrl + 'sounds/tom_low.ogg' },
+        { id: 'tom_medium', src: baseUrl + 'sounds/tom_medium.ogg' }
     ];
 
 for (var a = 0 ; a < MANIFEST.length ; a++)

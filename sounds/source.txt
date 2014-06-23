@@ -10,3 +10,31 @@ snare:
 hi-hat:
     https://www.freesound.org/people/PSYCHO%20BOOMER/sounds/42548/
     http://creativecommons.org/publicdomain/zero/1.0/
+
+floor-tom:
+    http://freesound.org/people/xIceCoffeex/sounds/171485/
+    http://creativecommons.org/publicdomain/zero/1.0/
+
+high-tom:
+    http://freesound.org/people/rocknessmonster89/sounds/173838/
+    http://creativecommons.org/licenses/by/3.0/
+
+medium-tom:
+    http://freesound.org/people/Surfjira/sounds/56483/
+    http://creativecommons.org/licenses/by/3.0/
+
+low-tom:
+    http://freesound.org/people/rocknessmonster89/sounds/173837/
+    http://creativecommons.org/licenses/by/3.0/
+
+ride cymbal:
+    http://freesound.org/people/Veiler/sounds/209898/
+    http://creativecommons.org/publicdomain/zero/1.0/
+
+crash cymbal:
+    http://freesound.org/people/ianhall/sounds/13244/
+    http://creativecommons.org/licenses/by/3.0/
+
+splash cymbal:
+    http://freesound.org/people/ani_music/sounds/219612/
+    http://creativecommons.org/licenses/by/3.0/
