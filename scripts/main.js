@@ -53,6 +53,8 @@ for (var a = 0 ; a < componentsInfo.length ; a++)
 
     COMPONENTS.push( new Component( name, BEAT[ name ], row ) );
     }
+
+window.onkeyup = keyboardShortcuts;
 }
 
 
@@ -88,3 +90,13 @@ window.clearInterval( INTERVAL_F );
 Audio.stop();
 }
 
+
+function keyboardShortcuts( event )
+{
+var key = event.keyCode;
+
+if ( key == EVENT_KEY.space )
+    {
+    Menu.playClick();
+    }
+}

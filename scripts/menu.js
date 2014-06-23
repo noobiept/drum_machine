@@ -5,6 +5,9 @@ function Menu()
 
 }
 
+var IS_PLAYING = false;
+var PLAY_ELEMENT = null;
+
 Menu.init = function()
 {
 var play = document.querySelector( '#Play' );
@@ -43,28 +46,30 @@ tempo.oninput = function( event )
     tempoValue.innerHTML = tempo.value;
     };
 
-var isPlaying = false;
+IS_PLAYING = false;
+PLAY_ELEMENT = play;
 play.innerHTML = 'Play';
 
-play.onclick = function()
+play.onclick = Menu.playClick;
+};
+
+
+Menu.playClick = function()
+{
+if ( IS_PLAYING )
     {
-    if ( isPlaying )
-        {
-        play.innerHTML = 'Play';
-        isPlaying = false;
-        stop();
-        }
+    PLAY_ELEMENT.innerHTML = 'Play';
+    IS_PLAYING = false;
+    stop();
+    }
 
-    else
-        {
-        isPlaying = true;
-        play.innerHTML = 'Stop';
+else
+    {
+    IS_PLAYING = true;
+    PLAY_ELEMENT.innerHTML = 'Stop';
 
-        playAgain();
-        }
-    };
-
-
+    playAgain();
+    }
 };
 
 
