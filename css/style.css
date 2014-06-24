@@ -24,3 +24,15 @@
     padding: 10px;
     min-width: 15px;
     }
+
+#DrumTable th
+    {
+    min-width: 230px;
+    }
+
+.button
+    {
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
+    }

@@ -33,25 +33,17 @@ function init()
 Menu.init();
 
 var componentsInfo = [
-    { name: 'crash', row: document.querySelector( '#CrashRow' ) },
-    { name: 'splash', row: document.querySelector( '#SplashRow' ) },
-    { name: 'ride', row: document.querySelector( '#RideRow' ) },
-    { name: 'hi_hat', row: document.querySelector( '#HiHatRow' ) },
-    { name: 'snare', row: document.querySelector( '#SnareRow' ) },
-    { name: 'tom_high', row: document.querySelector( '#HighTomRow' ) },
-    { name: 'tom_medium', row: document.querySelector( '#MediumTomRow' ) },
-    { name: 'tom_low', row: document.querySelector( '#LowTomRow' ) },
-    { name: 'bass', row: document.querySelector( '#BassRow' ) }
-];
+     'crash', 'splash', 'ride',
+     'hi_hat', 'snare', 'tom_high',
+     'tom_medium', 'tom_low', 'bass'
+    ];
 
 
 for (var a = 0 ; a < componentsInfo.length ; a++)
     {
-    var info = componentsInfo[ a ];
-    var name = info.name;
-    var row = info.row;
+    var name = componentsInfo[ a ];
 
-    COMPONENTS.push( new Component( name, BEAT[ name ], row ) );
+    COMPONENTS.push( new Component( name, BEAT[ name ] ) );
     }
 
 window.onkeyup = keyboardShortcuts;

@@ -1,13 +1,27 @@
 (function(window)
 {
-function Component( name, beat, row )
+function Component( name, beat )
 {
 var _this = this;
-this.name = name;
-this.audio = Audio.get( name );
-this.beat = beat;
-this.row = row;
 
+var table = document.querySelector( '#DrumTable' );
+var row = document.createElement( 'tr' );
+var header = document.createElement( 'th' );
+
+header.innerHTML = name + ' ';
+
+var mute = document.createElement( 'span' );
+
+mute.innerHTML = 'mute';
+mute.className = 'button';
+mute.onclick = function() { _this.toggleMute(); };
+
+header.appendChild( mute );
+
+table.appendChild( row );
+
+row.className = 'ComponentRow';
+row.appendChild( header );
 
 for (var a = 0 ; a < INFO.DIVISIONS ; a++)
     {
@@ -28,6 +42,12 @@ for (var a = 0 ; a < INFO.DIVISIONS ; a++)
 
     row.appendChild( data );
     }
+
+this.name = name;
+this.audio = Audio.get( name );
+this.beat = beat;
+this.is_muted = false;
+this.mute_element = mute;
 }
 
 
@@ -51,8 +71,29 @@ else
 };
 
 
+Component.prototype.toggleMute = function()
+{
+if ( this.is_muted )
+    {
+    this.is_muted = false;
+    this.mute_element.innerHTML = 'mute';
+    }
+
+else
+    {
+    this.is_muted = true;
+    this.mute_element.innerHTML = 'un-mute';
+    }
+};
+
+
 Component.prototype.playSounds = function()
 {
+if ( this.is_muted )
+    {
+    return;
+    }
+
 var startTime = Audio.getCurrentTime();
 var quarterNoteTime = (60 / INFO.TEMPO);
 var eighthNoteTime = quarterNoteTime / 2;
