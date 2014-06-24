@@ -23,7 +23,7 @@ table.appendChild( row );
 row.className = 'ComponentRow';
 row.appendChild( header );
 
-for (var a = 0 ; a < INFO.DIVISIONS ; a++)
+for (var a = 0 ; a < beat.length ; a++)
     {
     var data = document.createElement( 'td' );
 
@@ -94,10 +94,16 @@ if ( this.is_muted )
     return;
     }
 
+var beat = Beats.getCurrent();
 var startTime = Audio.getCurrentTime();
-var quarterNoteTime = (60 / INFO.TEMPO);
-var eighthNoteTime = quarterNoteTime / 2;
-var sixteenthNoteTime = eighthNoteTime / 2;
+var bpm = INFO.TEMPO;
+
+var stepsDuration = {
+        '2': 30 / bpm,      // eighth note
+        '3': 20 / bpm       // triplet-eighth note
+    };
+
+var noteDuration = stepsDuration[ beat.steps_per_beat.toString() ];
 
 for (var a = 0 ; a < this.beat.length ; a++)
     {
@@ -105,7 +111,7 @@ for (var a = 0 ; a < this.beat.length ; a++)
 
     if ( position !== 0 )
         {
-        Audio.playSound( this.audio, startTime + a * eighthNoteTime );
+        Audio.playSound( this.audio, startTime + a * noteDuration );
         }
     }
 };
