@@ -18,7 +18,8 @@ var ALL = {
         bass       : [ 1, 0, 0, 0, 1, 0, 0, 0 ],
 
         how_many_beats: 4,
-        steps_per_beat: 2
+        steps_per_beat: 2,
+        name: 'beat1'
     },
     blues: {
         crash      : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
@@ -32,7 +33,8 @@ var ALL = {
         bass       : [ 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0 ],
 
         how_many_beats: 4,
-        steps_per_beat: 3
+        steps_per_beat: 3,
+        name: 'blues'
     }
 };
 
@@ -46,6 +48,18 @@ return _.keys( ALL );
 Beats.getCurrent = function()
 {
 return CURRENT_BEAT;
+};
+
+Beats.get = function( name )
+{
+var beat = ALL[ name ];
+
+if ( beat )
+    {
+    return beat;
+    }
+
+return null;
 };
 
 Beats.setCurrent = function( name )

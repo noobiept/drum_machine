@@ -10,6 +10,8 @@ var PLAY_ELEMENT = null;
 
 Menu.init = function()
 {
+var currentBeat = Beats.getCurrent();
+
     // play button
 var play = document.querySelector( '#Play' );
 
@@ -32,7 +34,11 @@ volumeValue.innerHTML = gain;
 volume.onchange = function( event )
     {
     Audio.setGain( volume.value );
-    playAgain();
+
+    if ( IS_PLAYING )
+        {
+        playAgain();
+        }
     };
 volume.oninput = function()
     {
@@ -52,13 +58,16 @@ tempoValue.innerHTML = currentTempo;
 tempo.onchange = function( event )
     {
     INFO.TEMPO = tempo.value;
-    playAgain();
+
+    if ( IS_PLAYING )
+        {
+        playAgain();
+        }
     };
 tempo.oninput = function( event )
     {
     tempoValue.innerHTML = tempo.value;
     };
-
 
 
     // beat selector
@@ -73,6 +82,11 @@ for (var a = 0 ; a < beatNames.length ; a++)
     option.value = name;
     option.innerHTML = name;
 
+    if ( currentBeat.name == name )
+        {
+        option.selected = true;
+        }
+
     selector.appendChild( option );
     }
 
@@ -81,19 +95,23 @@ selector.onchange = function( event )
     var selectedOption = selector.options[ selector.selectedIndex ];
 
     selectBeat( selectedOption.value );
+
+    if ( IS_PLAYING )
+        {
+        playAgain();
+        }
     };
 
     // beats per pattern
 var beats = document.querySelector( '#BeatsPerPattern' );
 var beatsValue = document.querySelector( '#BeatsPerPatternValue' );
 
-var currentBeat = Beats.getCurrent();
-
 beats.value = currentBeat.how_many_beats;
 beatsValue.innerHTML = currentBeat.how_many_beats;
 
 beats.onchange = function( event )
     {
+    Menu.stopPlaying();
     setBeatsPerPattern( beats.value );
     };
 beats.oninput = function( event )
@@ -112,6 +130,7 @@ stepsValue.innerHTML = currentBeat.steps_per_beat;
 steps.onchange = function( event )
     {
     setStepsPerBeat( steps.value );
+    Menu.stopPlaying();
     };
 steps.oninput = function( event )
     {
@@ -136,6 +155,13 @@ else
 
     playAgain();
     }
+};
+
+Menu.stopPlaying = function()
+{
+IS_PLAYING = false;
+PLAY_ELEMENT.innerHTML = 'Play';
+stop();
 };
 
 

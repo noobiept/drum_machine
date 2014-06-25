@@ -75,14 +75,40 @@ function selectBeat( beatName )
 {
 var beat = Beats.setCurrent( beatName );
 
+if ( beat === null )
+    {
+    return;
+    }
+
 for (var a = 0 ; a < COMPONENTS.length ; a++)
     {
     var component = COMPONENTS[ a ];
 
-    component.setBeat( beat[ component.name ] );    //HERE
+    component.setBeat( beat[ component.name ] );
     }
 }
 
+function setBeatLength( nextLength )
+{
+var beat = Beats.getCurrent();
+var currentLength = beat.how_many_beats * beat.steps_per_beat;
+var difference = currentLength - nextLength;
+
+while ( difference != 0 )
+    {
+    if ( difference < 0 )
+        {
+        addPosition();
+        difference++;
+        }
+
+    else if ( difference > 0 )
+        {
+        removeLastPosition();
+        difference--;
+        }
+    }
+}
 
 
 function addPosition()
@@ -104,27 +130,11 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
 
 function setBeatsPerPattern( howMany )
 {
+stop();
+
 var beat = Beats.getCurrent();
-var currentLength = beat.how_many_beats * beat.steps_per_beat;
 
-var nextLength = howMany * beat.steps_per_beat;
-
-var difference = currentLength - nextLength;
-
-while ( difference != 0 )
-    {
-    if ( difference < 0 )
-        {
-        addPosition();
-        difference++;
-        }
-
-    else if ( difference > 0 )
-        {
-        removeLastPosition();
-        difference--;
-        }
-    }
+setBeatLength( howMany * beat.steps_per_beat );
 
 beat.how_many_beats = howMany;
 }
@@ -132,27 +142,11 @@ beat.how_many_beats = howMany;
 
 function setStepsPerBeat( howMany )
 {
+stop();
+
 var beat = Beats.getCurrent();
-var currentLength = beat.how_many_beats * beat.steps_per_beat;
 
-var nextLength = beat.how_many_beats * howMany;
-
-var difference = currentLength - nextLength;
-
-while ( difference != 0 )
-    {
-    if ( difference < 0 )
-        {
-        addPosition();
-        difference++;
-        }
-
-    else if ( difference > 0 )
-        {
-        removeLastPosition();
-        difference--;
-        }
-    }
+setBeatLength( beat.how_many_beats * howMany );
 
 beat.steps_per_beat = howMany;
 }

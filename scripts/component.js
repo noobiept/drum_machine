@@ -23,6 +23,33 @@ table.appendChild( row );
 row.className = 'ComponentRow';
 row.appendChild( header );
 
+this.row = row;
+this.name = name;
+this.audio = Audio.get( name );
+this.is_muted = false;
+this.mute_element = mute;
+
+this.setBeat( beat );
+}
+
+Component.prototype.clearBeat = function()
+{
+var td = this.row.querySelectorAll( 'td' );
+
+for (var a = 0 ; a < td.length ; a++)
+    {
+    this.row.removeChild( td[ a ] );
+    }
+
+this.beat = [];
+};
+
+
+Component.prototype.setBeat = function( beat )
+{
+this.clearBeat();
+var _this = this;
+var row = this.row;
 
 for (var a = 0 ; a < beat.length ; a++)
     {
@@ -44,17 +71,7 @@ for (var a = 0 ; a < beat.length ; a++)
     row.appendChild( data );
     }
 
-this.row = row;
-this.name = name;
-this.audio = Audio.get( name );
 this.beat = beat;
-this.is_muted = false;
-this.mute_element = mute;
-}
-
-Component.prototype.setBeat = function( beat )
-{
-
 };
 
 
