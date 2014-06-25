@@ -1,3 +1,9 @@
+function deepClone( obj )
+{
+return JSON.parse( JSON.stringify( obj ) );
+}
+
+
 var EVENT_KEY = {
 
     backspace  : 8,

@@ -23,6 +23,7 @@ table.appendChild( row );
 row.className = 'ComponentRow';
 row.appendChild( header );
 
+
 for (var a = 0 ; a < beat.length ; a++)
     {
     var data = document.createElement( 'td' );
@@ -43,12 +44,48 @@ for (var a = 0 ; a < beat.length ; a++)
     row.appendChild( data );
     }
 
+this.row = row;
 this.name = name;
 this.audio = Audio.get( name );
 this.beat = beat;
 this.is_muted = false;
 this.mute_element = mute;
 }
+
+Component.prototype.setBeat = function( beat )
+{
+
+};
+
+
+Component.prototype.addPosition = function()
+{
+var _this = this;
+
+var data = document.createElement( 'td' );
+
+data.setAttribute( 'data-position', this.beat.length.toString() );
+data.onclick = function( event ) { _this.togglePosition( event ) };
+data.innerHTML = ' ';
+
+this.beat.push( 0 );
+
+this.row.appendChild( data );
+};
+
+Component.prototype.removeLastPosition = function()
+{
+var row = this.row;
+
+if ( row.childNodes.length > 0 )
+    {
+    row.removeChild( row.childNodes[ row.childNodes.length - 1 ] );
+
+    this.beat.pop();
+    }
+
+};
+
 
 
 Component.prototype.togglePosition = function( event )

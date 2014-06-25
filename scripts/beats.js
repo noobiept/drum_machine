@@ -36,7 +36,7 @@ var ALL = {
     }
 };
 
-var CURRENT_BEAT = ALL.blues;
+var CURRENT_BEAT = deepClone( ALL.blues );
 
 Beats.getNames = function()
 {
@@ -46,6 +46,23 @@ return _.keys( ALL );
 Beats.getCurrent = function()
 {
 return CURRENT_BEAT;
+};
+
+Beats.setCurrent = function( name )
+{
+var beat = ALL[ name ];
+
+if ( beat )
+    {
+    CURRENT_BEAT = deepClone( ALL[ name ] );
+
+    return ALL[ name ];
+    }
+
+else
+    {
+    return null;
+    }
 };
 
 

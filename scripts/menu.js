@@ -10,11 +10,19 @@ var PLAY_ELEMENT = null;
 
 Menu.init = function()
 {
+    // play button
 var play = document.querySelector( '#Play' );
+
+IS_PLAYING = false;
+PLAY_ELEMENT = play;
+play.innerHTML = 'Play';
+
+play.onclick = Menu.playClick;
+
+
+    // volume
 var volume = document.querySelector( '#Volume' );
 var volumeValue = document.querySelector( '#VolumeValue' );
-var tempo = document.querySelector( '#Tempo' );
-var tempoValue = document.querySelector( '#TempoValue' );
 
 var gain = Audio.getGain();
 
@@ -31,6 +39,11 @@ volume.oninput = function()
     volumeValue.innerHTML = volume.value;
     };
 
+
+    // tempo
+var tempo = document.querySelector( '#Tempo' );
+var tempoValue = document.querySelector( '#TempoValue' );
+
 var currentTempo = INFO.TEMPO;
 
 tempo.value = currentTempo;
@@ -46,11 +59,64 @@ tempo.oninput = function( event )
     tempoValue.innerHTML = tempo.value;
     };
 
-IS_PLAYING = false;
-PLAY_ELEMENT = play;
-play.innerHTML = 'Play';
 
-play.onclick = Menu.playClick;
+
+    // beat selector
+var selector = document.querySelector( '#BeatSelector' );
+var beatNames = Beats.getNames();
+
+for (var a = 0 ; a < beatNames.length ; a++)
+    {
+    var name = beatNames[ a ];
+    var option = document.createElement( 'option' );
+
+    option.value = name;
+    option.innerHTML = name;
+
+    selector.appendChild( option );
+    }
+
+selector.onchange = function( event )
+    {
+    var selectedOption = selector.options[ selector.selectedIndex ];
+
+    selectBeat( selectedOption.value );
+    };
+
+    // beats per pattern
+var beats = document.querySelector( '#BeatsPerPattern' );
+var beatsValue = document.querySelector( '#BeatsPerPatternValue' );
+
+var currentBeat = Beats.getCurrent();
+
+beats.value = currentBeat.how_many_beats;
+beatsValue.innerHTML = currentBeat.how_many_beats;
+
+beats.onchange = function( event )
+    {
+    setBeatsPerPattern( beats.value );
+    };
+beats.oninput = function( event )
+    {
+    beatsValue.innerHTML = beats.value;
+    };
+
+
+    // steps per beat
+var steps = document.querySelector( '#StepsPerBeat' );
+var stepsValue = document.querySelector( '#StepsPerBeatValue' );
+
+steps.value = currentBeat.steps_per_beat;
+stepsValue.innerHTML = currentBeat.steps_per_beat;
+
+steps.onchange = function( event )
+    {
+    setStepsPerBeat( steps.value );
+    };
+steps.oninput = function( event )
+    {
+    stepsValue.innerHTML = steps.value;
+    };
 };
 
 

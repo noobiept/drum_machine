@@ -71,6 +71,93 @@ Audio.stop();
 }
 
 
+function selectBeat( beatName )
+{
+var beat = Beats.setCurrent( beatName );
+
+for (var a = 0 ; a < COMPONENTS.length ; a++)
+    {
+    var component = COMPONENTS[ a ];
+
+    component.setBeat( beat[ component.name ] );    //HERE
+    }
+}
+
+
+
+function addPosition()
+{
+for (var a = 0 ; a < COMPONENTS.length ; a++)
+    {
+    COMPONENTS[ a ].addPosition();
+    }
+}
+
+
+function removeLastPosition()
+{
+for (var a = 0 ; a < COMPONENTS.length ; a++)
+    {
+    COMPONENTS[ a ].removeLastPosition();
+    }
+}
+
+function setBeatsPerPattern( howMany )
+{
+var beat = Beats.getCurrent();
+var currentLength = beat.how_many_beats * beat.steps_per_beat;
+
+var nextLength = howMany * beat.steps_per_beat;
+
+var difference = currentLength - nextLength;
+
+while ( difference != 0 )
+    {
+    if ( difference < 0 )
+        {
+        addPosition();
+        difference++;
+        }
+
+    else if ( difference > 0 )
+        {
+        removeLastPosition();
+        difference--;
+        }
+    }
+
+beat.how_many_beats = howMany;
+}
+
+
+function setStepsPerBeat( howMany )
+{
+var beat = Beats.getCurrent();
+var currentLength = beat.how_many_beats * beat.steps_per_beat;
+
+var nextLength = beat.how_many_beats * howMany;
+
+var difference = currentLength - nextLength;
+
+while ( difference != 0 )
+    {
+    if ( difference < 0 )
+        {
+        addPosition();
+        difference++;
+        }
+
+    else if ( difference > 0 )
+        {
+        removeLastPosition();
+        difference--;
+        }
+    }
+
+beat.steps_per_beat = howMany;
+}
+
+
 function keyboardShortcuts( event )
 {
 var key = event.keyCode;
