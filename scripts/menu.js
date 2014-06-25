@@ -10,10 +10,11 @@ var PLAY_ELEMENT = null;
 
 Menu.init = function()
 {
+var container = document.querySelector( '#Menu' );
 var currentBeat = Beats.getCurrent();
 
     // play button
-var play = document.querySelector( '#Play' );
+var play = container.querySelector( '#Play' );
 
 IS_PLAYING = false;
 PLAY_ELEMENT = play;
@@ -23,8 +24,8 @@ play.onclick = Menu.playClick;
 
 
     // volume
-var volume = document.querySelector( '#Volume' );
-var volumeValue = document.querySelector( '#VolumeValue' );
+var volume = container.querySelector( '#Volume' );
+var volumeValue = container.querySelector( '#VolumeValue' );
 
 var gain = Audio.getGain();
 
@@ -47,8 +48,8 @@ volume.oninput = function()
 
 
     // tempo
-var tempo = document.querySelector( '#Tempo' );
-var tempoValue = document.querySelector( '#TempoValue' );
+var tempo = container.querySelector( '#Tempo' );
+var tempoValue = container.querySelector( '#TempoValue' );
 
 var currentTempo = INFO.TEMPO;
 
@@ -71,7 +72,7 @@ tempo.oninput = function( event )
 
 
     // beat selector
-var selector = document.querySelector( '#BeatSelector' );
+var selector = container.querySelector( '#BeatSelector' );
 var beatNames = Beats.getNames();
 
 for (var a = 0 ; a < beatNames.length ; a++)
@@ -103,8 +104,8 @@ selector.onchange = function( event )
     };
 
     // beats per pattern
-var beats = document.querySelector( '#BeatsPerPattern' );
-var beatsValue = document.querySelector( '#BeatsPerPatternValue' );
+var beats = container.querySelector( '#BeatsPerPattern' );
+var beatsValue = container.querySelector( '#BeatsPerPatternValue' );
 
 beats.value = currentBeat.how_many_beats;
 beatsValue.innerHTML = currentBeat.how_many_beats;
@@ -121,8 +122,8 @@ beats.oninput = function( event )
 
 
     // steps per beat
-var steps = document.querySelector( '#StepsPerBeat' );
-var stepsValue = document.querySelector( '#StepsPerBeatValue' );
+var steps = container.querySelector( '#StepsPerBeat' );
+var stepsValue = container.querySelector( '#StepsPerBeatValue' );
 
 steps.value = currentBeat.steps_per_beat;
 stepsValue.innerHTML = currentBeat.steps_per_beat;
@@ -136,6 +137,8 @@ steps.oninput = function( event )
     {
     stepsValue.innerHTML = steps.value;
     };
+
+container.style.display = 'block';
 };
 
 

@@ -18,8 +18,6 @@ Audio.load( init, BASE_URL );
 
 function init()
 {
-Menu.init();
-
 var componentsInfo = [
      'crash', 'splash', 'ride',
      'hi_hat', 'snare', 'tom_high',
@@ -35,6 +33,8 @@ for (var a = 0 ; a < componentsInfo.length ; a++)
     }
 
 window.onkeyup = keyboardShortcuts;
+
+Menu.init();
 }
 
 
