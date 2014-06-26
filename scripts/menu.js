@@ -110,6 +110,7 @@ selector.onchange = function( event )
         }
     };
 
+
     // beats per pattern
 var beats = container.querySelector( '#BeatsPerPattern' );
 var beatsValue = container.querySelector( '#BeatsPerPatternValue' );

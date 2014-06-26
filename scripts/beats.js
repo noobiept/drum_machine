@@ -50,17 +50,6 @@ Beats.getCurrent = function()
 return CURRENT_BEAT;
 };
 
-Beats.get = function( name )
-{
-var beat = ALL[ name ];
-
-if ( beat )
-    {
-    return beat;
-    }
-
-return null;
-};
 
 Beats.setCurrent = function( name )
 {
@@ -70,7 +59,7 @@ if ( beat )
     {
     CURRENT_BEAT = deepClone( ALL[ name ] );
 
-    return ALL[ name ];
+    return CURRENT_BEAT;
     }
 
 else
@@ -78,7 +67,6 @@ else
     return null;
     }
 };
-
 
 window.Beats = Beats;
 
