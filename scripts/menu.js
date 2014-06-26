@@ -72,44 +72,40 @@ tempo.oninput = function( event )
 
 
     // beat selector
-var selector = container.querySelector( '#BeatSelector' );
+var beatsContainer = container.querySelector( '#DefaultBeatsContainer' );
 var beatNames = Beats.getNames();
+
+var loadBeat = function( beatName )
+    {
+    return function()
+        {
+        selectBeat( beatName );
+
+        var currentBeat = Beats.getCurrent();
+
+        beats.value = currentBeat.how_many_beats;
+        beatsValue.innerHTML = currentBeat.how_many_beats;
+        steps.value = currentBeat.steps_per_beat;
+        stepsValue.innerHTML = currentBeat.steps_per_beat;
+
+        if ( IS_PLAYING )
+            {
+            playAgain();
+            }
+        };
+    };
 
 for (var a = 0 ; a < beatNames.length ; a++)
     {
     var name = beatNames[ a ];
-    var option = document.createElement( 'option' );
+    var beat = document.createElement( 'span' );
 
-    option.value = name;
-    option.innerHTML = name;
+    beat.className = 'button';
+    beat.innerHTML = name;
+    beat.onclick = loadBeat( name );
 
-    if ( currentBeat.name == name )
-        {
-        option.selected = true;
-        }
-
-    selector.appendChild( option );
+    beatsContainer.appendChild( beat );
     }
-
-selector.onchange = function( event )
-    {
-    var selectedOption = selector.options[ selector.selectedIndex ];
-
-    selectBeat( selectedOption.value );
-
-    var currentBeat = Beats.getCurrent();
-
-    beats.value = currentBeat.how_many_beats;
-    beatsValue.innerHTML = currentBeat.how_many_beats;
-    steps.value = currentBeat.steps_per_beat;
-    stepsValue.innerHTML = currentBeat.steps_per_beat;
-
-    if ( IS_PLAYING )
-        {
-        playAgain();
-        }
-    };
-
 
     // beats per pattern
 var beats = container.querySelector( '#BeatsPerPattern' );

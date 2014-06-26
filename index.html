@@ -17,26 +17,28 @@
 <table id="DrumTable"></table>
 
 <div id="Menu">
-    <span id="Play" class="button">Play</span>
+    <div>
+        <span id="Play" class="button">Play</span>
 
-    <label for="Volume">Volume</label>
-    <input id="Volume" type="range" min="0" max="1.2" step="0.1" />
-    <span id="VolumeValue"></span>
+        <label for="Volume">Volume</label>
+        <input id="Volume" type="range" min="0" max="1.2" step="0.1" />
+        <span id="VolumeValue"></span>
 
-    <label for="Tempo">Tempo</label>
-    <input id="Tempo" type="range" min="40" max="200" step="1" />
-    <span id="TempoValue"></span>
+        <label for="Tempo">Tempo</label>
+        <input id="Tempo" type="range" min="40" max="200" step="1" />
+        <span id="TempoValue"></span>
 
-    <label for="BeatSelector">Beat</label>
-    <select id="BeatSelector"></select>
+        <label for="BeatsPerPattern">Beats per pattern</label>
+        <input type="range" id="BeatsPerPattern" min="1" max="10" step="1" />
+        <span id="BeatsPerPatternValue"></span>
 
-    <label for="BeatsPerPattern">Beats per pattern</label>
-    <input type="range" id="BeatsPerPattern" min="1" max="10" step="1" />
-    <span id="BeatsPerPatternValue"></span>
-
-    <label for="StepsPerBeat">Steps per beat</label>
-    <input type="range" id="StepsPerBeat" min="1" max="6" step="1" />
-    <span id="StepsPerBeatValue"></span>
+        <label for="StepsPerBeat">Steps per beat</label>
+        <input type="range" id="StepsPerBeat" min="1" max="6" step="1" />
+        <span id="StepsPerBeatValue"></span>
+    </div>
+    <div id="DefaultBeatsContainer">
+        <span>examples</span>
+    </div>
 </div>
 
 </body>
