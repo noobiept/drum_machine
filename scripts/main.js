@@ -110,6 +110,35 @@ while ( difference != 0 )
     }
 }
 
+/*
+    Re-sets the css class on the first column of a new beat
+ */
+
+function setBeatCssClass( beat )
+{
+var steps = beat.steps_per_beat;
+
+for (var a = 0 ; a < COMPONENTS.length ; a++)
+    {
+    var component = COMPONENTS[ a ];
+
+    var td = component.row.querySelectorAll( 'td' );
+
+    for (var b = 0 ; b < td.length ; b++)
+        {
+        if ( b % steps === 0 )
+            {
+            td[ b ].className = 'BeatColumn';
+            }
+
+        else
+            {
+            td[ b ].className = '';
+            }
+        }
+    }
+}
+
 
 function addPosition()
 {
@@ -137,6 +166,8 @@ var beat = Beats.getCurrent();
 setBeatLength( howMany * beat.steps_per_beat );
 
 beat.how_many_beats = howMany;
+
+setBeatCssClass( beat );
 }
 
 
@@ -149,6 +180,8 @@ var beat = Beats.getCurrent();
 setBeatLength( beat.how_many_beats * howMany );
 
 beat.steps_per_beat = howMany;
+
+setBeatCssClass( beat );
 }
 
 

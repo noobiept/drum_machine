@@ -8,6 +8,7 @@ function Menu()
 var IS_PLAYING = false;
 var PLAY_ELEMENT = null;
 
+
 Menu.init = function()
 {
 var container = document.querySelector( '#Menu' );
@@ -17,7 +18,6 @@ var currentBeat = Beats.getCurrent();
 var play = container.querySelector( '#Play' );
 
 IS_PLAYING = false;
-PLAY_ELEMENT = play;
 play.innerHTML = 'Play';
 
 play.onclick = Menu.playClick;
@@ -97,6 +97,13 @@ selector.onchange = function( event )
 
     selectBeat( selectedOption.value );
 
+    var currentBeat = Beats.getCurrent();
+
+    beats.value = currentBeat.how_many_beats;
+    beatsValue.innerHTML = currentBeat.how_many_beats;
+    steps.value = currentBeat.steps_per_beat;
+    stepsValue.innerHTML = currentBeat.steps_per_beat;
+
     if ( IS_PLAYING )
         {
         playAgain();
@@ -139,6 +146,9 @@ steps.oninput = function( event )
     };
 
 container.style.display = 'block';
+
+    // save references to the html elements
+PLAY_ELEMENT = play;
 };
 
 

@@ -50,6 +50,7 @@ Component.prototype.setBeat = function( beat )
 this.clearBeat();
 var _this = this;
 var row = this.row;
+var steps = Beats.getCurrent().steps_per_beat;
 
 for (var a = 0 ; a < beat.length ; a++)
     {
@@ -68,6 +69,11 @@ for (var a = 0 ; a < beat.length ; a++)
         data.innerHTML = 'x';
         }
 
+    if ( a % steps === 0 )
+        {
+        data.className = 'BeatColumn';
+        }
+
     row.appendChild( data );
     }
 
@@ -78,7 +84,6 @@ this.beat = beat;
 Component.prototype.addPosition = function()
 {
 var _this = this;
-
 var data = document.createElement( 'td' );
 
 data.setAttribute( 'data-position', this.beat.length.toString() );
@@ -153,8 +158,12 @@ var startTime = Audio.getCurrentTime();
 var bpm = INFO.TEMPO;
 
 var stepsDuration = {
-        '2': 30 / bpm,      // eighth note
-        '3': 20 / bpm       // triplet-eighth note
+        '1': 60 / 1 / bpm,      // quarter note
+        '2': 60 / 2 / bpm,      // eighth note
+        '3': 60 / 3 / bpm,      // triplet-eighth note
+        '4': 60 / 4 / bpm,      // sixteenth note
+        '5': 60 / 5 / bpm,
+        '6': 60 / 6 / bpm       // triplet-sixteenth note
     };
 
 var noteDuration = stepsDuration[ beat.steps_per_beat.toString() ];
