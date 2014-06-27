@@ -1,6 +1,7 @@
 var BASE_URL = '';
 
 var INTERVAL_F;
+var INDIVIDUAL_NOTE_F;
 
 var INFO = {
     TEMPO: 80
@@ -32,6 +33,23 @@ for (var a = 0 ; a < componentsInfo.length ; a++)
     COMPONENTS.push( new Component( name, beat[ name ] ) );
     }
 
+var beatLength = beat.how_many_beats * beat.steps_per_beat;
+var table = document.querySelector( '#DrumTable' );
+var row = document.createElement( 'tr' );
+var th = document.createElement( 'th' );
+
+row.className = 'PlayingStatus';
+row.appendChild( th );
+
+for (var a = 0 ; a < beatLength ; a++)
+    {
+    var td = document.createElement( 'td' );
+
+    row.appendChild( td );
+    }
+
+table.appendChild( row );
+
 window.onkeyup = keyboardShortcuts;
 
 Menu.init();
@@ -58,7 +76,37 @@ var beat = Beats.getCurrent();
 
 var interval = 60 / tempo * beat.how_many_beats * 1000;
 
+var position = 0;
+var totalNotes = beat.how_many_beats * beat.steps_per_beat;
+var current = null;
+
+var emphasizeCurrentNote = function()
+    {
+        // it starts at 1, and there's the th as well, so +2
+    var childPosition = position + 2;
+    var element = document.querySelector( '.PlayingStatus td:nth-child(' + childPosition + ')' );
+
+    if ( current )
+        {
+        current.classList.remove( 'CurrentNote' );
+        }
+
+    element.classList.add( 'CurrentNote' );
+    current = element;
+
+    position++;
+
+    if ( position >= totalNotes )
+        {
+        position = 0;
+        }
+    };
+
 INTERVAL_F = window.setInterval( start, interval );
+INDIVIDUAL_NOTE_F = window.setInterval( emphasizeCurrentNote, interval / totalNotes );
+
+    // start right away
+emphasizeCurrentNote();
 start();
 }
 
@@ -66,9 +114,18 @@ start();
 function stop()
 {
 window.clearInterval( INTERVAL_F );
+window.clearInterval( INDIVIDUAL_NOTE_F );
+
+var playing = document.querySelector( '.CurrentNote' );
+
+if ( playing )
+    {
+    playing.classList.remove( 'CurrentNote' );
+    }
 
 Audio.stop();
 }
+
 
 
 function selectBeat( beatName )
@@ -85,6 +142,24 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
     var component = COMPONENTS[ a ];
 
     component.setBeat( beat[ component.name ] );
+    }
+
+var playing = document.querySelector( '.PlayingStatus' );
+var nodes = playing.childNodes;
+var beatLength = beat.how_many_beats * beat.steps_per_beat;
+
+    // -1 because of the th
+while ( nodes.length - 1 !== beatLength )
+    {
+    if ( nodes.length - 1 < beatLength )
+        {
+        addPlayingStatusPosition();
+        }
+
+    else
+        {
+        removePlayingStatusPosition();
+        }
     }
 }
 
@@ -146,7 +221,10 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
     {
     COMPONENTS[ a ].addPosition();
     }
+
+addPlayingStatusPosition();
 }
+
 
 
 function removeLastPosition()
@@ -155,7 +233,28 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
     {
     COMPONENTS[ a ].removeLastPosition();
     }
+
+removePlayingStatusPosition();
 }
+
+
+
+function addPlayingStatusPosition()
+{
+var playing = document.querySelector( '.PlayingStatus' );
+var td = document.createElement( 'td' );
+
+playing.appendChild( td );
+}
+
+
+function removePlayingStatusPosition()
+{
+var playing = document.querySelector( '.PlayingStatus' );
+
+playing.removeChild( playing.childNodes[ playing.childNodes.length - 1 ] );
+}
+
 
 function setBeatsPerPattern( howMany )
 {
