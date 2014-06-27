@@ -38,7 +38,7 @@ volume.onchange = function( event )
 
     if ( IS_PLAYING )
         {
-        playAgain();
+        DrumMachine.playAgain();
         }
     };
 volume.oninput = function()
@@ -51,18 +51,18 @@ volume.oninput = function()
 var tempo = container.querySelector( '#Tempo' );
 var tempoValue = container.querySelector( '#TempoValue' );
 
-var currentTempo = INFO.TEMPO;
+var currentTempo = DrumMachine.getTempo();
 
 tempo.value = currentTempo;
 tempoValue.innerHTML = currentTempo;
 
 tempo.onchange = function( event )
     {
-    INFO.TEMPO = tempo.value;
+    DrumMachine.setTempo( tempo.value );
 
     if ( IS_PLAYING )
         {
-        playAgain();
+        DrumMachine.playAgain();
         }
     };
 tempo.oninput = function( event )
@@ -79,7 +79,7 @@ var loadBeat = function( beatName )
     {
     return function()
         {
-        selectBeat( beatName );
+        DrumMachine.selectBeat( beatName );
 
         var currentBeat = Beats.getCurrent();
 
@@ -90,7 +90,7 @@ var loadBeat = function( beatName )
 
         if ( IS_PLAYING )
             {
-            playAgain();
+            DrumMachine.playAgain();
             }
         };
     };
@@ -117,7 +117,7 @@ beatsValue.innerHTML = currentBeat.how_many_beats;
 beats.onchange = function( event )
     {
     Menu.stopPlaying();
-    setBeatsPerPattern( beats.value );
+    DrumMachine.setBeatsPerPattern( beats.value );
     };
 beats.oninput = function( event )
     {
@@ -134,7 +134,7 @@ stepsValue.innerHTML = currentBeat.steps_per_beat;
 
 steps.onchange = function( event )
     {
-    setStepsPerBeat( steps.value );
+    DrumMachine.setStepsPerBeat( steps.value );
     Menu.stopPlaying();
     };
 steps.oninput = function( event )
@@ -155,7 +155,7 @@ if ( IS_PLAYING )
     {
     PLAY_ELEMENT.innerHTML = 'Play';
     IS_PLAYING = false;
-    stop();
+    DrumMachine.stop();
     }
 
 else
@@ -163,7 +163,7 @@ else
     IS_PLAYING = true;
     PLAY_ELEMENT.innerHTML = 'Stop';
 
-    playAgain();
+    DrumMachine.playAgain();
     }
 };
 
@@ -171,7 +171,7 @@ Menu.stopPlaying = function()
 {
 IS_PLAYING = false;
 PLAY_ELEMENT.innerHTML = 'Play';
-stop();
+DrumMachine.stop();
 };
 
 
