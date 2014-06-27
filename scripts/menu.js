@@ -36,10 +36,7 @@ volume.onchange = function( event )
     {
     Audio.setGain( volume.value );
 
-    if ( IS_PLAYING )
-        {
-        DrumMachine.playAgain();
-        }
+    Menu.stopPlaying();
     };
 volume.oninput = function()
     {
@@ -60,10 +57,7 @@ tempo.onchange = function( event )
     {
     DrumMachine.setTempo( tempo.value );
 
-    if ( IS_PLAYING )
-        {
-        DrumMachine.playAgain();
-        }
+    Menu.stopPlaying();
     };
 tempo.oninput = function( event )
     {
@@ -88,10 +82,7 @@ var loadBeat = function( beatName )
         steps.value = currentBeat.steps_per_beat;
         stepsValue.innerHTML = currentBeat.steps_per_beat;
 
-        if ( IS_PLAYING )
-            {
-            DrumMachine.playAgain();
-            }
+        Menu.stopPlaying();
         };
     };
 
@@ -134,8 +125,8 @@ stepsValue.innerHTML = currentBeat.steps_per_beat;
 
 steps.onchange = function( event )
     {
-    DrumMachine.setStepsPerBeat( steps.value );
     Menu.stopPlaying();
+    DrumMachine.setStepsPerBeat( steps.value );
     };
 steps.oninput = function( event )
     {
