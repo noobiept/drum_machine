@@ -77,11 +77,14 @@ var loadBeat = function( beatName )
 
         var currentBeat = Beats.getCurrent();
 
+        DrumMachine.setTempo( currentBeat.tempo );
+
         beats.value = currentBeat.how_many_beats;
         beatsValue.innerHTML = currentBeat.how_many_beats;
         steps.value = currentBeat.steps_per_beat;
         stepsValue.innerHTML = currentBeat.steps_per_beat;
-
+        tempo.value = currentBeat.tempo;
+        tempoValue.innerHTML = currentBeat.tempo;
         Menu.stopPlaying();
         };
     };
