@@ -1,9 +1,9 @@
-var BASE_URL = '';
+var STATIC_URL = '';
 
 
 window.onload = function()
 {
-Audio.load( DrumMachine.init, BASE_URL );
+Audio.load( DrumMachine.init, STATIC_URL );
 };
 
 

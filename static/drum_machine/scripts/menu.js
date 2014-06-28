@@ -11,7 +11,7 @@ var PLAY_ELEMENT = null;
 
 Menu.init = function()
 {
-var container = document.querySelector( '#Menu' );
+var container = document.querySelector( '#DrumMenu' );
 var currentBeat = Beats.getCurrent();
 
     // play button
