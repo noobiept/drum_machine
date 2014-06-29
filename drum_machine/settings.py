@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 
     'accounts',
+    'drum_machine',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

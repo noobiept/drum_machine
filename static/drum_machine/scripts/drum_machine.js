@@ -289,6 +289,39 @@ setBeatCssClass( beat );
 };
 
 
+DrumMachine.saveBeat = function()
+{
+var name = document.querySelector( '#BeatName' ).value;
+
+var pattern = /\s*\w+\s*/;
+
+if ( !pattern.test( name ) )
+    {
+    console.log( 'Need to add a name.' );
+    return;
+    }
+
+var beatDescription = {};
+
+beatDescription[ 'beat' ] = JSON.stringify( Beats.getCurrent() );
+beatDescription[ 'tempo' ] = JSON.stringify( TEMPO );
+beatDescription[ 'name' ] = JSON.stringify( name );
+
+$.ajax({
+        url: '/save_beat',
+        type: 'POST',
+        data: beatDescription,
+        error: function( jqXHR, textStatus, errorThrown )
+            {
+            console.log( textStatus, errorThrown );
+            },
+        success: function( data, textStatus, jqXHR )
+            {
+            console.log( textStatus );
+            }
+    });
+};
+
 
 window.DrumMachine = DrumMachine;
 

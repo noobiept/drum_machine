@@ -2,6 +2,7 @@
 
 {% block scripts %}
     {% load static %}
+    <script type="text/javascript" src="{% static 'drum_machine/libraries/jquery-2.1.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'drum_machine/libraries/underscore-min.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'drum_machine/scripts/utilities.js' %}"></script>
@@ -44,6 +45,11 @@
     </div>
     <div id="DefaultBeatsContainer">
         <span>examples</span>
+    </div>
+    <div>
+        <span id="SaveBeat" class="button">save</span>
+        <label for="BeatName">Name</label>
+        <input id="BeatName" type="text" />
     </div>
 </div>
 
