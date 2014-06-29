@@ -5,6 +5,59 @@ function Beats()
 
 }
 
+Beats.init = function()
+{
+$.ajax({
+        url: '/load_beat',
+        type: 'POST',
+        error: function( jqXHR, textStatus, errorThrown )
+            {
+            console.log( textStatus, errorThrown );
+            },
+        success: function( data, textStatus, jqXHR )
+            {
+            if ( !_.isArray( data ) )
+                {
+                console.log( 'error loading beats, data not an array.' );
+                return;
+                }
+
+            try {
+                for (var a = 0 ; a < data.length ; a++)
+                    {
+                    data[ a ].tempo = JSON.parse( data[ a ].tempo );
+                    data[ a ].description = JSON.parse( data[ a ].description );
+                    }
+            }
+
+            catch( error )
+                {
+                console.log('ERROR:', error);
+                return;
+                }
+
+            var container = document.querySelector( '#CustomBeatsContainer' );
+
+            for (var a = 0 ; a < data.length ; a++)
+                {
+                var beat = data[ a ];
+
+                var description = beat.description;
+
+                description.name = beat.name;
+                description.tempo = beat.tempo;
+
+                var element = document.createElement( 'span' );
+
+                element.className = 'button';
+                element.innerHTML = description.name;
+
+                container.appendChild( element );
+                }
+            }
+    });
+};
+
 var ALL = {
     beat1: {
         crash      : [ 1, 0, 0, 0, 1, 0, 0, 0 ],

@@ -7,6 +7,7 @@ urlpatterns = patterns('',
 
     url( r'^$', 'drum_machine.views.home', name= 'home' ),
     url( r'^save_beat$', 'drum_machine.views.save_beat', name= 'save_beat' ),
+    url( r'^load_beat$', 'drum_machine.views.load_beat', name= 'load_beat' ),
 
     url( r'^accounts/', include( 'accounts.urls', namespace= 'accounts', app_name= 'accounts' ) ),
 

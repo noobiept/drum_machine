@@ -48,6 +48,7 @@ table.appendChild( row );
 window.onkeyup = keyboardShortcuts;
 
 Menu.init();
+Beats.init();
 };
 
 
@@ -301,11 +302,11 @@ if ( !pattern.test( name ) )
     return;
     }
 
-var beatDescription = {};
-
-beatDescription[ 'beat' ] = JSON.stringify( Beats.getCurrent() );
-beatDescription[ 'tempo' ] = JSON.stringify( TEMPO );
-beatDescription[ 'name' ] = JSON.stringify( name );
+var beatDescription = {
+    description: JSON.stringify( Beats.getCurrent() ),
+    name: name,
+    tempo: TEMPO
+};
 
 $.ajax({
         url: '/save_beat',

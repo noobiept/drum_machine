@@ -142,7 +142,10 @@ container.style.display = 'block';
     // save beat
 var save = container.querySelector( '#SaveBeat' );
 
-save.onclick = DrumMachine.saveBeat;
+if ( save )
+    {
+    save.onclick = DrumMachine.saveBeat;
+    }
 
     // save references to the html elements
 PLAY_ELEMENT = play;
