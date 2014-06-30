@@ -310,6 +310,8 @@ var beatDescription = {
     name: name
 };
 
+SAVE_MESSAGE.show( 'Saving..' );
+
 $.ajax({
         url: '/save_beat',
         type: 'POST',

@@ -127,6 +127,8 @@ else
     this.beat[ position ] = 0;
     element.innerHTML = ' ';
     }
+
+Menu.customBeatName();
 };
 
 

@@ -25,7 +25,7 @@ if ( this.is_opened )
 this.is_opened = true;
 this.element.innerHTML = text;
 
-this.timeout_f = window.setTimeout( function() { _this.hide(); }, 1000 );
+this.timeout_f = window.setTimeout( function() { _this.hide(); }, 2000 );
 };
 
 Message.prototype.hide = function()

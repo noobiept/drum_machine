@@ -51,9 +51,12 @@
         <div id="CustomBeatsContainer">
             <span>beats</span>
         </div>
+    {% endif %}
+        <div>current beat: <span id="CurrentBeatName"></span></div>
+    {% if user.is_authenticated %}
         <div id="SaveBeatContainer">
             <span id="SaveBeat" class="button">save</span>
-            <label for="BeatName">Name</label>
+            <label for="BeatName">name</label>
             <input id="BeatName" type="text" />
         </div>
     {% endif %}
