@@ -40,10 +40,19 @@ def save_beat( request ):
         if not beatDescription or not name:
             return HttpResponseBadRequest( 'missing parameters.' )
 
-        beat = Beat( user= request.user, name= name, description= beatDescription )
-        beat.save()
+            # check if there's a beat with the same name
+        try:
+            request.user.beat_set.get( name= name )
 
-        return HttpResponse( status= 201 )
+        except Beat.DoesNotExist:
+
+            beat = Beat( user= request.user, name= name, description= beatDescription )
+            beat.save()
+
+            return HttpResponse( status= 201 )
+
+        else:
+            return HttpResponseBadRequest( 'A beat with that name already exist (try a different name).' )
 
     else:
         return HttpResponseBadRequest( 'Only post requests.' )

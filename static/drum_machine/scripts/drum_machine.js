@@ -316,7 +316,8 @@ $.ajax({
         data: beatDescription,
         error: function( jqXHR, textStatus, errorThrown )
             {
-            console.log( textStatus, errorThrown );
+            SAVE_MESSAGE.show( jqXHR.responseText );
+            console.log( jqXHR.responseText, textStatus, errorThrown );
             },
         success: function( data, textStatus, jqXHR )
             {

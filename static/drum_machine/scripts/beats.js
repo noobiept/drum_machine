@@ -125,7 +125,7 @@ if ( container )
         type: 'POST',
         error: function( jqXHR, textStatus, errorThrown )
             {
-            console.log( textStatus, errorThrown );
+            console.log( jqXHR.responseText, textStatus, errorThrown );
             container.removeChild( loading );
             },
         success: function( data, textStatus, jqXHR )
