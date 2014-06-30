@@ -1,0 +1,9 @@
+{% extends "home.html" %}
+
+{% block scripts %}
+    {{ block.super }}
+
+    <script type="text/javascript">
+        var STARTING_BEAT = '{{ beat.description|safe }}';
+    </script>
+{% endblock %}

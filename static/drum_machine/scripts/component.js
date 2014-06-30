@@ -155,7 +155,7 @@ if ( this.is_muted )
 
 var beat = Beats.getCurrent();
 var startTime = Audio.getCurrentTime();
-var bpm = DrumMachine.getTempo();
+var bpm = beat.tempo;
 
 var stepsDuration = {
         '1': 60 / 1 / bpm,      // quarter note

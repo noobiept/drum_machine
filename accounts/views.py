@@ -42,7 +42,8 @@ def user_page( request, username ):
         raise Http404( "User doesn't exist." )
 
     context = {
-        'pageUser': user
+        'pageUser': user,
+        'beats': user.beat_set.order_by( '-date_created' )[ :5 ]
     }
 
     utilities.get_message( request, context )

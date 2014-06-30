@@ -1,5 +1,6 @@
+    // these variables can be changed in server templates
 var STATIC_URL = '';
-
+var STARTING_BEAT = '';
 
 window.onload = function()
 {

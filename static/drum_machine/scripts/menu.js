@@ -53,14 +53,14 @@ volume.oninput = function()
 var tempo = container.querySelector( '#Tempo' );
 var tempoValue = container.querySelector( '#TempoValue' );
 
-var currentTempo = DrumMachine.getTempo();
+var currentTempo = currentBeat.tempo;
 
 tempo.value = currentTempo;
 tempoValue.innerHTML = currentTempo;
 
 tempo.onchange = function( event )
     {
-    DrumMachine.setTempo( tempo.value );
+    Beats.getCurrent().tempo = tempo.value;
 
     Menu.stopPlaying();
     };
@@ -173,8 +173,6 @@ beat.onclick = function()
     DrumMachine.selectBeat( name );
 
     var currentBeat = Beats.getCurrent();
-
-    DrumMachine.setTempo( currentBeat.tempo );
 
     BEATS_ELEMENT.value           = currentBeat.how_many_beats;
     BEATS_VALUE_ELEMENT.innerHTML = currentBeat.how_many_beats;

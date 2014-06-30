@@ -18,6 +18,15 @@ def home( request ):
     return render( request, 'home.html', context )
 
 
+def open_beat( request, beatId ):
+
+    context = {
+        'beat': Beat.objects.get( id= beatId )
+    }
+
+    return render( request, 'open_beat.html', context )
+
+
 def save_beat( request ):
 
     if not request.user.is_authenticated():
@@ -40,7 +49,7 @@ def save_beat( request ):
         return HttpResponseBadRequest( 'Only post requests.' )
 
 
-def load_beat( request ):
+def load_beats( request ):
 
     if not request.user.is_authenticated():
         return HttpResponseBadRequest( 'Need to be authenticated.' )

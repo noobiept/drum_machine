@@ -8,12 +8,13 @@ function DrumMachine()
 var INTERVAL_F;
 var INDIVIDUAL_NOTE_F;
 
-var TEMPO = 80;
 var COMPONENTS = [];
 
 
 DrumMachine.init = function()
 {
+Beats.init();
+
 var componentsInfo = [
      'crash', 'splash', 'ride',
      'hi_hat', 'snare', 'tom_high',
@@ -48,19 +49,6 @@ table.appendChild( row );
 window.onkeyup = keyboardShortcuts;
 
 Menu.init();
-Beats.init();
-};
-
-
-
-DrumMachine.getTempo = function()
-{
-return TEMPO;
-};
-
-DrumMachine.setTempo = function( tempo )
-{
-TEMPO = tempo;
 };
 
 
@@ -79,7 +67,7 @@ DrumMachine.stop();
 
 var beat = Beats.getCurrent();
 
-var interval = 60 / TEMPO * beat.how_many_beats * 1000;
+var interval = 60 / beat.tempo * beat.how_many_beats * 1000;
 
 var position = 0;
 var totalNotes = beat.how_many_beats * beat.steps_per_beat;
@@ -305,7 +293,6 @@ if ( !pattern.test( name ) )
 var currentBeat = Beats.getCurrent();
 
 currentBeat.name = name;
-currentBeat.tempo = TEMPO;
 
 var clone = deepClone( currentBeat );
 

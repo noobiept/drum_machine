@@ -5,52 +5,6 @@ function Beats()
 
 }
 
-Beats.init = function()
-{
-$.ajax({
-        url: '/load_beat',
-        type: 'POST',
-        error: function( jqXHR, textStatus, errorThrown )
-            {
-            console.log( textStatus, errorThrown );
-            },
-        success: function( data, textStatus, jqXHR )
-            {
-            if ( !_.isArray( data ) )
-                {
-                console.log( 'error loading beats, data not an array.' );
-                return;
-                }
-
-            try {
-                for (var a = 0 ; a < data.length ; a++)
-                    {
-                    data[ a ].description = JSON.parse( data[ a ].description );
-                    }
-            }
-
-            catch( error )
-                {
-                console.log('ERROR:', error);
-                return;
-                }
-
-            var container = document.querySelector( '#CustomBeatsContainer' );
-
-
-            for (var a = 0 ; a < data.length ; a++)
-                {
-                var beat = data[ a ];
-
-                var description = beat.description;
-
-                Beats.add( description );
-                Menu.addBeat( description.name, container );
-                }
-            }
-    });
-};
-
 var ALL = {
     beat1: {
         crash      : [ 1, 0, 0, 0, 1, 0, 0, 0 ],
@@ -134,7 +88,72 @@ var ALL = {
     }
 };
 
-var CURRENT_BEAT = deepClone( ALL.beat1 );
+var CURRENT_BEAT = null;
+
+Beats.init = function()
+{
+if ( STARTING_BEAT )
+    {
+    try {
+        CURRENT_BEAT = deepClone( JSON.parse( STARTING_BEAT ) );
+    }
+
+    catch (error)
+        {
+        console.log(error);
+        CURRENT_BEAT = deepClone( ALL.beat1 );
+        }
+    }
+
+else
+    {
+    CURRENT_BEAT = deepClone( ALL.beat1 );
+    }
+
+$.ajax({
+        url: '/load_beats',
+        type: 'POST',
+        error: function( jqXHR, textStatus, errorThrown )
+            {
+            console.log( textStatus, errorThrown );
+            },
+        success: function( data, textStatus, jqXHR )
+            {
+            if ( !_.isArray( data ) )
+                {
+                console.log( 'error loading beats, data not an array.' );
+                return;
+                }
+
+            try {
+                for (var a = 0 ; a < data.length ; a++)
+                    {
+                    data[ a ].description = JSON.parse( data[ a ].description );
+                    }
+            }
+
+            catch( error )
+                {
+                console.log('ERROR:', error);
+                return;
+                }
+
+            var container = document.querySelector( '#CustomBeatsContainer' );
+
+
+            for (var a = 0 ; a < data.length ; a++)
+                {
+                var beat = data[ a ];
+
+                var description = beat.description;
+
+                Beats.add( description );
+                Menu.addBeat( description.name, container );
+                }
+            }
+    });
+};
+
 
 Beats.getNames = function()
 {
