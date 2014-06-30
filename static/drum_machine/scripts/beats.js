@@ -110,15 +110,28 @@ else
     CURRENT_BEAT = deepClone( ALL.beat1 );
     }
 
-$.ajax({
+    // if this element is not present, means no user is currently logged in, so no point in trying to load the custom beats
+var container = document.querySelector( '#CustomBeatsContainer' );
+
+if ( container )
+    {
+    var loading = document.createElement( 'span' );
+    loading.innerHTML = 'loading..';
+
+    container.appendChild( loading );
+
+    $.ajax({
         url: '/load_beats',
         type: 'POST',
         error: function( jqXHR, textStatus, errorThrown )
             {
             console.log( textStatus, errorThrown );
+            container.removeChild( loading );
             },
         success: function( data, textStatus, jqXHR )
             {
+            container.removeChild( loading );
+
             if ( !_.isArray( data ) )
                 {
                 console.log( 'error loading beats, data not an array.' );
@@ -138,8 +151,6 @@ $.ajax({
                 return;
                 }
 
-            var container = document.querySelector( '#CustomBeatsContainer' );
-
 
             for (var a = 0 ; a < data.length ; a++)
                 {
@@ -151,7 +162,8 @@ $.ajax({
                 Menu.addBeat( description.name, container );
                 }
             }
-    });
+        });
+    }
 };
 
 

@@ -8,6 +8,8 @@ function DrumMachine()
 var INTERVAL_F;
 var INDIVIDUAL_NOTE_F;
 
+var SAVE_MESSAGE = null;
+
 var COMPONENTS = [];
 
 
@@ -47,6 +49,13 @@ for (var a = 0 ; a < beatLength ; a++)
 table.appendChild( row );
 
 window.onkeyup = keyboardShortcuts;
+
+var saveContainer = document.querySelector( '#SaveBeatContainer' );
+
+if ( saveContainer )
+    {
+    SAVE_MESSAGE = new Message( saveContainer );
+    }
 
 Menu.init();
 };
@@ -286,7 +295,7 @@ var pattern = /\s*\w+\s*/;
 
 if ( !pattern.test( name ) )
     {
-    console.log( 'Need to add a name.' );
+    SAVE_MESSAGE.show( 'Need to add a name.' );
     return;
     }
 
@@ -311,7 +320,8 @@ $.ajax({
             },
         success: function( data, textStatus, jqXHR )
             {
-            console.log( name + ' beat saved' );
+            SAVE_MESSAGE.show( name + ' beat saved' );
+
             var container = document.querySelector( '#CustomBeatsContainer' );
 
             Beats.add( clone );
