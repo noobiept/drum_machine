@@ -26,13 +26,12 @@ def save_beat( request ):
     if request.method == 'POST':
 
         beatDescription = request.POST.get( 'description' )
-        tempo = request.POST.get( 'tempo' )
         name = request.POST.get( 'name' )
 
-        if not beatDescription or not tempo or not name:
+        if not beatDescription or not name:
             return HttpResponseBadRequest( 'missing parameters.' )
 
-        beat = Beat( user= request.user, name= name, tempo= tempo, description= beatDescription )
+        beat = Beat( user= request.user, name= name, description= beatDescription )
         beat.save()
 
         return HttpResponse( status= 201 )
@@ -55,7 +54,6 @@ def load_beat( request ):
         for beat in beats:
             response.append({
                 "name": beat.name,
-                "tempo": beat.tempo,
                 "description": beat.description
             })
 

@@ -302,10 +302,16 @@ if ( !pattern.test( name ) )
     return;
     }
 
+var currentBeat = Beats.getCurrent();
+
+currentBeat.name = name;
+currentBeat.tempo = TEMPO;
+
+var clone = deepClone( currentBeat );
+
 var beatDescription = {
-    description: JSON.stringify( Beats.getCurrent() ),
-    name: name,
-    tempo: TEMPO
+    description: JSON.stringify( currentBeat ),
+    name: name
 };
 
 $.ajax({
@@ -318,7 +324,11 @@ $.ajax({
             },
         success: function( data, textStatus, jqXHR )
             {
-            console.log( textStatus );
+            console.log( name + ' beat saved' );
+            var container = document.querySelector( '#CustomBeatsContainer' );
+
+            Beats.add( clone );
+            Menu.addBeat( name, container );
             }
     });
 };

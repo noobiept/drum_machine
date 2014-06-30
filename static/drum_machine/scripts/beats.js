@@ -25,7 +25,6 @@ $.ajax({
             try {
                 for (var a = 0 ; a < data.length ; a++)
                     {
-                    data[ a ].tempo = JSON.parse( data[ a ].tempo );
                     data[ a ].description = JSON.parse( data[ a ].description );
                     }
             }
@@ -38,21 +37,15 @@ $.ajax({
 
             var container = document.querySelector( '#CustomBeatsContainer' );
 
+
             for (var a = 0 ; a < data.length ; a++)
                 {
                 var beat = data[ a ];
 
                 var description = beat.description;
 
-                description.name = beat.name;
-                description.tempo = beat.tempo;
-
-                var element = document.createElement( 'span' );
-
-                element.className = 'button';
-                element.innerHTML = description.name;
-
-                container.appendChild( element );
+                Beats.add( description );
+                Menu.addBeat( description.name, container );
                 }
             }
     });
@@ -170,6 +163,12 @@ else
     return null;
     }
 };
+
+Beats.add = function( beat )
+{
+ALL[ beat.name ] = beat;
+};
+
 
 window.Beats = Beats;
 

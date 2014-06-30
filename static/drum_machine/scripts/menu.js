@@ -7,7 +7,12 @@ function Menu()
 
 var IS_PLAYING = false;
 var PLAY_ELEMENT = null;
-
+var BEATS_ELEMENT = null;
+var BEATS_VALUE_ELEMENT = null;
+var STEPS_ELEMENT = null;
+var STEPS_VALUE_ELEMENT = null;
+var TEMPO_ELEMENT = null;
+var TEMPO_VALUE_ELEMENT = null;
 
 Menu.init = function()
 {
@@ -65,42 +70,6 @@ tempo.oninput = function( event )
     };
 
 
-    // beat selector
-var beatsContainer = container.querySelector( '#DefaultBeatsContainer' );
-var beatNames = Beats.getNames();
-
-var loadBeat = function( beatName )
-    {
-    return function()
-        {
-        DrumMachine.selectBeat( beatName );
-
-        var currentBeat = Beats.getCurrent();
-
-        DrumMachine.setTempo( currentBeat.tempo );
-
-        beats.value = currentBeat.how_many_beats;
-        beatsValue.innerHTML = currentBeat.how_many_beats;
-        steps.value = currentBeat.steps_per_beat;
-        stepsValue.innerHTML = currentBeat.steps_per_beat;
-        tempo.value = currentBeat.tempo;
-        tempoValue.innerHTML = currentBeat.tempo;
-        Menu.stopPlaying();
-        };
-    };
-
-for (var a = 0 ; a < beatNames.length ; a++)
-    {
-    var name = beatNames[ a ];
-    var beat = document.createElement( 'span' );
-
-    beat.className = 'button';
-    beat.innerHTML = name;
-    beat.onclick = loadBeat( name );
-
-    beatsContainer.appendChild( beat );
-    }
-
     // beats per pattern
 var beats = container.querySelector( '#BeatsPerPattern' );
 var beatsValue = container.querySelector( '#BeatsPerPatternValue' );
@@ -138,6 +107,15 @@ steps.oninput = function( event )
 
 container.style.display = 'block';
 
+    // beat selector
+    // add the default beats
+var beatsContainer = container.querySelector( '#DefaultBeatsContainer' );
+var beatNames = Beats.getNames();
+
+for (var a = 0 ; a < beatNames.length ; a++)
+    {
+    Menu.addBeat( beatNames[ a ], beatsContainer );
+    }
 
     // save beat
 var save = container.querySelector( '#SaveBeat' );
@@ -149,6 +127,12 @@ if ( save )
 
     // save references to the html elements
 PLAY_ELEMENT = play;
+BEATS_ELEMENT = beats;
+BEATS_VALUE_ELEMENT = beatsValue;
+STEPS_ELEMENT = steps;
+STEPS_VALUE_ELEMENT = stepsValue;
+TEMPO_ELEMENT = tempo;
+TEMPO_VALUE_ELEMENT = tempoValue;
 };
 
 
@@ -175,6 +159,33 @@ Menu.stopPlaying = function()
 IS_PLAYING = false;
 PLAY_ELEMENT.innerHTML = 'Play';
 DrumMachine.stop();
+};
+
+
+Menu.addBeat = function( name, container )
+{
+var beat = document.createElement( 'span' );
+
+beat.className = 'button';
+beat.innerHTML = name;
+beat.onclick = function()
+    {
+    DrumMachine.selectBeat( name );
+
+    var currentBeat = Beats.getCurrent();
+
+    DrumMachine.setTempo( currentBeat.tempo );
+
+    BEATS_ELEMENT.value           = currentBeat.how_many_beats;
+    BEATS_VALUE_ELEMENT.innerHTML = currentBeat.how_many_beats;
+    STEPS_ELEMENT.value           = currentBeat.steps_per_beat;
+    STEPS_VALUE_ELEMENT.innerHTML = currentBeat.steps_per_beat;
+    TEMPO_ELEMENT.value           = currentBeat.tempo;
+    TEMPO_VALUE_ELEMENT.innerHTML = currentBeat.tempo;
+    Menu.stopPlaying();
+    };
+
+container.appendChild( beat );
 };
 
 
