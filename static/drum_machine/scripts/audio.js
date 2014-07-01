@@ -29,16 +29,25 @@ CALLBACK = callback;
 
 MANIFEST = [
         { id: 'bass1', src: baseUrl + 'drum_machine/sounds/bass.ogg' },
+        { id: 'bass2', src: baseUrl + 'drum_machine/sounds/bass2.ogg' },
         { id: 'snare1', src: baseUrl + 'drum_machine/sounds/snare.ogg' },
         { id: 'snare2', src: baseUrl + 'drum_machine/sounds/snare2.ogg' },
         { id: 'hi_hat1', src: baseUrl + 'drum_machine/sounds/cymbal_hi_hat.ogg' },
+        { id: 'hi_hat2', src: baseUrl + 'drum_machine/sounds/cymbal_hi_hat2.ogg' },
         { id: 'crash1', src: baseUrl + 'drum_machine/sounds/cymbal_crash.ogg' },
+        { id: 'crash2', src: baseUrl + 'drum_machine/sounds/cymbal_crash2.ogg' },
         { id: 'ride1', src: baseUrl + 'drum_machine/sounds/cymbal_ride.ogg' },
+        { id: 'ride2', src: baseUrl + 'drum_machine/sounds/cymbal_ride2.ogg' },
         { id: 'splash1', src: baseUrl + 'drum_machine/sounds/cymbal_splash.ogg' },
+        { id: 'splash2', src: baseUrl + 'drum_machine/sounds/cymbal_splash2.ogg' },
         { id: 'tom_floor1', src: baseUrl + 'drum_machine/sounds/tom_floor.ogg' },
+        { id: 'tom_floor2', src: baseUrl + 'drum_machine/sounds/tom_floor2.ogg' },
         { id: 'tom_high1', src: baseUrl + 'drum_machine/sounds/tom_high.ogg' },
+        { id: 'tom_high2', src: baseUrl + 'drum_machine/sounds/tom_high2.ogg' },
         { id: 'tom_low1', src: baseUrl + 'drum_machine/sounds/tom_low.ogg' },
-        { id: 'tom_medium1', src: baseUrl + 'drum_machine/sounds/tom_medium.ogg' }
+        { id: 'tom_low2', src: baseUrl + 'drum_machine/sounds/tom_low2.ogg' },
+        { id: 'tom_medium1', src: baseUrl + 'drum_machine/sounds/tom_medium.ogg' },
+        { id: 'tom_medium2', src: baseUrl + 'drum_machine/sounds/tom_medium2.ogg' }
     ];
 
 for (var a = 0 ; a < MANIFEST.length ; a++)

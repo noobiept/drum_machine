@@ -1,8 +1,10 @@
 bass drum: 
     https://www.freesound.org/people/biodegry/sounds/34498/
-    Creative Commons Attribution 3.0 Unported 
     http://creativecommons.org/licenses/by/3.0/
-    
+
+    http://freesound.org/people/adammusic18/sounds/208871/
+    http://creativecommons.org/publicdomain/zero/1.0/
+
 snare: 
     https://www.freesound.org/people/kaonaya/sounds/131363/
     http://creativecommons.org/publicdomain/zero/1.0/
@@ -14,30 +16,54 @@ hi-hat:
     https://www.freesound.org/people/PSYCHO%20BOOMER/sounds/42548/
     http://creativecommons.org/publicdomain/zero/1.0/
 
+    http://freesound.org/people/cdiupe/sounds/112491/
+    http://creativecommons.org/publicdomain/zero/1.0/
+
 floor-tom:
     http://freesound.org/people/xIceCoffeex/sounds/171485/
+    http://creativecommons.org/publicdomain/zero/1.0/
+
+    http://freesound.org/people/stuntstudio/sounds/221484/
     http://creativecommons.org/publicdomain/zero/1.0/
 
 high-tom:
     http://freesound.org/people/rocknessmonster89/sounds/173838/
     http://creativecommons.org/licenses/by/3.0/
 
+    http://freesound.org/people/atomwrath/sounds/11397/
+    http://creativecommons.org/licenses/by/3.0/
+
 medium-tom:
     http://freesound.org/people/Surfjira/sounds/56483/
     http://creativecommons.org/licenses/by/3.0/
+
+    http://freesound.org/people/xIceCoffeex/sounds/171490/
+    http://creativecommons.org/publicdomain/zero/1.0/
 
 low-tom:
     http://freesound.org/people/rocknessmonster89/sounds/173837/
     http://creativecommons.org/licenses/by/3.0/
 
+    http://freesound.org/people/bluesplayer59/sounds/53551/
+    http://creativecommons.org/publicdomain/zero/1.0/
+
 ride cymbal:
     http://freesound.org/people/Veiler/sounds/209898/
     http://creativecommons.org/publicdomain/zero/1.0/
+
+    http://freesound.org/people/ianhall/sounds/13250/
+    http://creativecommons.org/licenses/by/3.0/
 
 crash cymbal:
     http://freesound.org/people/ianhall/sounds/13244/
     http://creativecommons.org/licenses/by/3.0/
 
+    http://freesound.org/people/britishpirate93/sounds/162313/
+    http://creativecommons.org/licenses/by/3.0/
+
 splash cymbal:
     http://freesound.org/people/ani_music/sounds/219612/
+    http://creativecommons.org/licenses/by/3.0/
+
+    http://freesound.org/people/britishpirate93/sounds/162316/
     http://creativecommons.org/licenses/by/3.0/

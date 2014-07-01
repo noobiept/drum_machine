@@ -69,8 +69,6 @@ volumeValue.innerHTML = Number( volume ).toFixed( 1 );
 volumeInput.onchange = function( event )
     {
     _this.volume = volumeInput.value;
-
-    Menu.stopPlaying();
     };
 volumeInput.oninput = function( event )
     {
