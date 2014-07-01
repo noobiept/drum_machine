@@ -13,6 +13,7 @@
 
 <div id="Menu">
     <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'beats_list' %}">beats list</a>
 
     {% if user.is_authenticated %}
         <a href="{% url 'accounts:user_page' user.username %}">{{ user.username }}</a>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<h2>Beats</h2>
+
+{% if beats %}
+    <table>
+        {% for beat in beats %}
+            <tr>
+                <td><a href="{{ beat.get_url }}">{{ beat.name }}</a></td>
+                <td><a href="{{ beat.user.get_url }}">{{ beat.user }}</a></td>
+                <td>{{ beat.date_created|naturaltime }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No beats yet.</p>
+{% endif %}
+{% endblock %}

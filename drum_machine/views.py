@@ -81,3 +81,14 @@ def load_beats( request ):
 
     else:
         return HttpResponseBadRequest( 'Only post requests.' )
+
+
+def beats_list( request ):
+
+    allBeats = Beat.objects.order_by( '-date_created' )
+
+    context = {
+        'beats': allBeats
+    }
+
+    return render( request, 'beats_list.html', context )

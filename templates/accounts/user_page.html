@@ -32,11 +32,14 @@
 
 <h2>Latest beats</h2>
 {% if beats %}
-    <ul>
+    <table>
         {% for beat in beats %}
-            <li><a href="{{ beat.get_url }}">{{ beat.name }} ({{ beat.date_created|naturaltime }})</a></li>
+            <tr>
+                <td><a href="{{ beat.get_url }}">{{ beat.name }}</a></td>
+                <td>{{ beat.date_created|naturaltime }}</td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p>No beats.</p>
 {% endif %}
