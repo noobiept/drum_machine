@@ -36,7 +36,7 @@ var volumeValue = container.querySelector( '#VolumeValue' );
 var gain = Audio.getGain();
 
 volume.value = gain;
-volumeValue.innerHTML = gain;
+volumeValue.innerHTML = Number( gain ).toFixed( 1 );
 
 volume.onchange = function( event )
     {
@@ -46,7 +46,7 @@ volume.onchange = function( event )
     };
 volume.oninput = function()
     {
-    volumeValue.innerHTML = volume.value;
+    volumeValue.innerHTML = Number( volume.value ).toFixed( 1 );
     };
 
 

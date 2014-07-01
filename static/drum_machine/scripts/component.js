@@ -16,13 +16,40 @@ mute.innerHTML = 'mute';
 mute.className = 'button';
 mute.onclick = function() { _this.toggleMute(); };
 
+var volumeInput = document.createElement( 'input' );
+var volumeValue = document.createElement( 'span' );
+
+volumeInput.type = 'range';
+volumeInput.min = 0;
+volumeInput.max = 1.2;
+volumeInput.step = 0.1;
+
+var volume = 1;
+
+volumeInput.value = volume;
+volumeValue.innerHTML = Number( volume ).toFixed( 1 );
+
+volumeInput.onchange = function( event )
+    {
+    _this.volume = volumeInput.value;
+
+    Menu.stopPlaying();
+    };
+volumeInput.oninput = function( event )
+    {
+    volumeValue.innerHTML = Number( volumeInput.value ).toFixed( 1 );
+    };
+
 header.appendChild( mute );
+header.appendChild( volumeInput );
+header.appendChild( volumeValue );
 
 table.appendChild( row );
 
 row.className = 'ComponentRow';
 row.appendChild( header );
 
+this.volume = volume;
 this.row = row;
 this.name = name;
 this.audio = Audio.get( name );
@@ -79,6 +106,7 @@ for (var a = 0 ; a < beat.length ; a++)
 
 this.beat = beat;
 };
+
 
 
 Component.prototype.addPosition = function()
@@ -176,7 +204,7 @@ for (var a = 0 ; a < this.beat.length ; a++)
 
     if ( position !== 0 )
         {
-        Audio.playSound( this.audio, startTime + a * noteDuration );
+        Audio.playSound( this.audio, startTime + a * noteDuration, this.volume );
         }
     }
 };

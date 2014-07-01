@@ -24,6 +24,12 @@
 #DrumTable th
     {
     min-width: 230px;
+    text-align: right;
+    }
+
+#DrumTable th input
+    {
+    width: 70px;
     }
 
 .button

@@ -80,17 +80,22 @@ request.onload = function()
 request.send();
 }
 
-Audio.playSound = function( buffer, time )
+Audio.playSound = function( buffer, time, gain )
 {
 var source = CONTEXT.createBufferSource();
 var gainNode = CONTEXT.createGain();
 
 source.buffer = buffer;
 source.onended = removeAudioSource;
-gainNode.gain.value = GAIN;
+gainNode.gain.value = gain;
+
+var globalGain = CONTEXT.createGain();
+
+globalGain.gain.value = GAIN;
 
 source.connect( gainNode );
-gainNode.connect( CONTEXT.destination );
+gainNode.connect( globalGain );
+globalGain.connect( CONTEXT.destination );
 
 source.start( time );
 
