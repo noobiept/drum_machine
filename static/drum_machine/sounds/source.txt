@@ -6,6 +6,9 @@ bass drum:
 snare: 
     https://www.freesound.org/people/kaonaya/sounds/131363/
     http://creativecommons.org/publicdomain/zero/1.0/
+
+    http://freesound.org/people/Veiler/sounds/209889/
+    http://creativecommons.org/publicdomain/zero/1.0/
     
 hi-hat:
     https://www.freesound.org/people/PSYCHO%20BOOMER/sounds/42548/

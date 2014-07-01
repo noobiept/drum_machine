@@ -4,11 +4,48 @@ function Component( name, beat )
 {
 var _this = this;
 
+var availableSounds = {};
+
+    // get all the sounds of a component (example snare1, snare2, etc)
+for(var a = 1 ; ; a++)
+    {
+    var sound = Audio.get( name + a );
+
+    if ( sound )
+        {
+        availableSounds[ name + a ] = sound;
+        }
+
+    else
+        {
+        break;
+        }
+    }
+
 var table = document.querySelector( '#DrumTable' );
 var row = document.createElement( 'tr' );
 var header = document.createElement( 'th' );
 
-header.innerHTML = name + ' ';
+var nameSelector = document.createElement( 'select' );
+var soundNames = _.keys( availableSounds );
+
+for (var a = 0 ; a < soundNames.length ; a++)
+    {
+    var option = document.createElement( 'option' );
+
+    option.innerHTML = soundNames[ a ];
+    option.value = soundNames[ a ];
+
+    nameSelector.appendChild( option );
+    }
+
+nameSelector.onchange = function( event )
+    {
+    var selectedOption = nameSelector.childNodes[ nameSelector.selectedIndex ];
+
+    _this.selected_sound = selectedOption.value;
+    };
+
 
 var mute = document.createElement( 'span' );
 
@@ -40,6 +77,7 @@ volumeInput.oninput = function( event )
     volumeValue.innerHTML = Number( volumeInput.value ).toFixed( 1 );
     };
 
+header.appendChild( nameSelector );
 header.appendChild( mute );
 header.appendChild( volumeInput );
 header.appendChild( volumeValue );
@@ -49,10 +87,12 @@ table.appendChild( row );
 row.className = 'ComponentRow';
 row.appendChild( header );
 
+
+this.selected_sound = name + '1';
+this.available_sounds = availableSounds;
 this.volume = volume;
 this.row = row;
 this.name = name;
-this.audio = Audio.get( name );
 this.is_muted = false;
 this.mute_element = mute;
 
@@ -204,7 +244,7 @@ for (var a = 0 ; a < this.beat.length ; a++)
 
     if ( position !== 0 )
         {
-        Audio.playSound( this.audio, startTime + a * noteDuration, this.volume );
+        Audio.playSound( this.available_sounds[ this.selected_sound ], startTime + a * noteDuration, this.volume );
         }
     }
 };
