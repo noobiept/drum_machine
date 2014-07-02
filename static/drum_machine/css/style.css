@@ -21,6 +21,11 @@
     height: 15px;
     }
 
+#DrumTable select
+    {
+    font-size: 20px;
+    }
+
 #DrumTable th
     {
     min-width: 230px;

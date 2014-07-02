@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseBadRequest, HttpResponse
+from django.http import HttpResponseBadRequest, HttpResponse, Http404
 
 import json
 
@@ -20,11 +20,19 @@ def home( request ):
 
 def open_beat( request, beatId ):
 
-    context = {
-        'beat': Beat.objects.get( id= beatId )
-    }
+    try:
+        beat = Beat.objects.get( id= beatId )
 
-    return render( request, 'open_beat.html', context )
+    except Beat.DoesNotExist:
+        raise Http404
+
+    else:
+
+        context = {
+            'beat': beat
+        }
+
+        return render( request, 'open_beat.html', context )
 
 
 def save_beat( request ):

@@ -110,7 +110,7 @@ def open_message( request, messageId ):
         raise Http404( "Message doesn't exist" )
 
     context = {
-        'message': message
+        'private_message': message
     }
 
     return render( request, 'accounts/open_message.html', context )

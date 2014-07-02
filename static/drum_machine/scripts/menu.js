@@ -41,8 +41,6 @@ volumeValue.innerHTML = Number( gain ).toFixed( 1 );
 volume.onchange = function( event )
     {
     Audio.setGain( volume.value );
-
-    Menu.stopPlaying();
     };
 volume.oninput = function()
     {
