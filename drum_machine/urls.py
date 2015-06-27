@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
-admin.autodiscover()
+
 
 urlpatterns = patterns('',
 
@@ -11,9 +11,9 @@ urlpatterns = patterns('',
     url( r'^load_beats$', 'drum_machine.views.load_beats', name= 'load_beats' ),
     url( r'^beats_list$', 'drum_machine.views.beats_list', name= 'beats_list' ),
 
+
     url( r'^accounts/', include( 'accounts.urls', namespace= 'accounts', app_name= 'accounts' ) ),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
     url( r'^admin/', include( admin.site.urls ) ),
 )
