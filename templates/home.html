@@ -49,13 +49,15 @@
             <span>beats</span>
         </div>
     {% endif %}
-        <div>current beat: <span id="CurrentBeatName"></span></div>
+
     {% if user.is_authenticated %}
         <div id="SaveBeatContainer">
-            <span id="SaveBeat" class="button">save</span>
             <label for="BeatName">name</label>
             <input id="BeatName" type="text" />
+            <span id="SaveBeat" class="button">save</span>
         </div>
+    {% else %}
+        <div>Need to <a href="{% url 'accounts:login' %}?next={{ request.get_full_path|urlencode }}">login</a> to save.</div>
     {% endif %}
 </div>
 

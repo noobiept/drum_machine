@@ -13,7 +13,8 @@ var STEPS_ELEMENT = null;
 var STEPS_VALUE_ELEMENT = null;
 var TEMPO_ELEMENT = null;
 var TEMPO_VALUE_ELEMENT = null;
-var BEAT_NAME_ELEMENT = null;
+var SELECTED_BEAT = null;       // reference to the html element of the current selected beat (or null if its a custom beat)
+
 
 Menu.init = function()
 {
@@ -80,7 +81,7 @@ beats.onchange = function( event )
     {
     Menu.stopPlaying();
     DrumMachine.setBeatsPerPattern( beats.value );
-    Menu.customBeatName();
+    Menu.removeSelectedBeat();
     };
 beats.oninput = function( event )
     {
@@ -99,7 +100,7 @@ steps.onchange = function( event )
     {
     Menu.stopPlaying();
     DrumMachine.setStepsPerBeat( steps.value );
-    Menu.customBeatName();
+    Menu.removeSelectedBeat();
     };
 steps.oninput = function( event )
     {
@@ -118,17 +119,27 @@ for (var a = 0 ; a < beatNames.length ; a++)
     Menu.addBeat( beatNames[ a ], beatsContainer );
     }
 
-    // current beat
-var beatNameElement = container.querySelector( '#CurrentBeatName' );
-
-beatNameElement.innerHTML = currentBeat.name;
 
     // save beat
 var save = container.querySelector( '#SaveBeat' );
 
 if ( save )
     {
-    save.onclick = DrumMachine.saveBeat;
+    var beatName = container.querySelector( '#BeatName' );
+
+    var save_f = function()
+        {
+        DrumMachine.saveBeat( beatName.value );
+        };
+
+    save.addEventListener( 'click', save_f );
+    beatName.addEventListener( 'keyup', function( event )
+        {
+        if ( event.keyCode === EVENT_KEY.enter )
+            {
+            save_f();
+            }
+        });
     }
 
 
@@ -140,7 +151,6 @@ STEPS_ELEMENT = steps;
 STEPS_VALUE_ELEMENT = stepsValue;
 TEMPO_ELEMENT = tempo;
 TEMPO_VALUE_ELEMENT = tempoValue;
-BEAT_NAME_ELEMENT = beatNameElement;
 };
 
 
@@ -169,10 +179,26 @@ PLAY_ELEMENT.innerHTML = 'Play';
 DrumMachine.stop();
 };
 
-Menu.customBeatName = function()
+
+
+Menu.removeSelectedBeat = function()
 {
-BEAT_NAME_ELEMENT.innerHTML = 'custom';
+if ( SELECTED_BEAT )
+    {
+    SELECTED_BEAT.classList.remove( 'selected' );
+    SELECTED_BEAT = null;
+    }
 };
+
+
+Menu.selectBeat = function( beatHtmlElement )
+{
+Menu.removeSelectedBeat();
+
+beatHtmlElement.classList.add( 'selected' );
+SELECTED_BEAT = beatHtmlElement;
+};
+
 
 
 Menu.addBeat = function( name, container )
@@ -184,7 +210,8 @@ beat.innerHTML = name;
 beat.onclick = function()
     {
     DrumMachine.selectBeat( name );
-
+    Menu.selectBeat( beat );
+        
     var currentBeat = Beats.getCurrent();
 
     BEATS_ELEMENT.value           = currentBeat.how_many_beats;
@@ -193,7 +220,6 @@ beat.onclick = function()
     STEPS_VALUE_ELEMENT.innerHTML = currentBeat.steps_per_beat;
     TEMPO_ELEMENT.value           = currentBeat.tempo;
     TEMPO_VALUE_ELEMENT.innerHTML = currentBeat.tempo;
-    BEAT_NAME_ELEMENT.innerHTML   = currentBeat.name;
     Menu.stopPlaying();
     };
 

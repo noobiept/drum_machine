@@ -287,10 +287,8 @@ setBeatCssClass( beat );
 };
 
 
-DrumMachine.saveBeat = function()
+DrumMachine.saveBeat = function( name )
 {
-var name = document.querySelector( '#BeatName' ).value;
-
 var pattern = /\s*\w+\s*/;
 
 if ( !pattern.test( name ) )

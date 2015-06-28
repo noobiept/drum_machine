@@ -194,7 +194,7 @@ else
     element.innerHTML = ' ';
     }
 
-Menu.customBeatName();
+Menu.removeSelectedBeat();
 };
 
 
