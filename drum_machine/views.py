@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseBadRequest, HttpResponse, Http404
+from django.http import HttpResponseBadRequest, HttpResponse, Http404, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 import json
 
 import drum_machine.utilities as utilities
 from drum_machine.models import Beat
+
 
 def home( request ):
 
@@ -99,4 +101,24 @@ def beats_list( request ):
         'beats': allBeats
     }
 
+    utilities.get_message( request, context )
+
     return render( request, 'beats_list.html', context )
+
+
+@login_required
+def remove_beat( request, beatId ):
+
+    try:
+        beat = request.user.beat_set.get( id= beatId )
+
+    except Beat.DoesNotExist:
+        raise Http404( "Didn't found that beat." )
+
+    else:
+        beat.delete()
+        utilities.set_message( request, 'Beat deleted.' )
+
+        redirect = request.GET.get( 'next', '/' )
+
+        return HttpResponseRedirect( redirect )

@@ -37,11 +37,20 @@
             <tr>
                 <td><a href="{{ beat.get_url }}">{{ beat.name }}</a></td>
                 <td>{{ beat.date_created|naturaltime }}</td>
+                {% if user.username == pageUser.username %}
+                    <td><a href="{% url 'remove_beat' beat.id %}?next={{ request.get_full_path|urlencode }}">remove</a></td>
+                {% endif %}
             </tr>
         {% endfor %}
     </table>
 {% else %}
     <p>No beats.</p>
 {% endif %}
+
+<div>
+    <a href="{% url 'accounts:all_beats' pageUser.username %}">All beats</a>
+</div>
+
+
 
 {% endblock %}
