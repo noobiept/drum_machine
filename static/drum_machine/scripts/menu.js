@@ -19,7 +19,6 @@ var SELECTED_BEAT = null;       // reference to the html element of the current 
 Menu.init = function()
 {
 var container = document.querySelector( '#DrumMenu' );
-var currentBeat = Beats.getCurrent();
 
     // play button
 var play = container.querySelector( '#Play' );
@@ -53,11 +52,6 @@ volume.oninput = function()
 var tempo = container.querySelector( '#Tempo' );
 var tempoValue = container.querySelector( '#TempoValue' );
 
-var currentTempo = currentBeat.tempo;
-
-tempo.value = currentTempo;
-tempoValue.innerHTML = currentTempo;
-
 tempo.onchange = function( event )
     {
     Beats.getCurrent().tempo = tempo.value;
@@ -73,9 +67,6 @@ tempo.oninput = function( event )
     // beats per pattern
 var beats = container.querySelector( '#BeatsPerPattern' );
 var beatsValue = container.querySelector( '#BeatsPerPatternValue' );
-
-beats.value = currentBeat.how_many_beats;
-beatsValue.innerHTML = currentBeat.how_many_beats;
 
 beats.onchange = function( event )
     {
@@ -93,9 +84,6 @@ beats.oninput = function( event )
 var steps = container.querySelector( '#StepsPerBeat' );
 var stepsValue = container.querySelector( '#StepsPerBeatValue' );
 
-steps.value = currentBeat.steps_per_beat;
-stepsValue.innerHTML = currentBeat.steps_per_beat;
-
 steps.onchange = function( event )
     {
     Menu.stopPlaying();
@@ -108,16 +96,6 @@ steps.oninput = function( event )
     };
 
 container.style.display = 'block';
-
-    // beat selector
-    // add the default beats
-var beatsContainer = container.querySelector( '#DefaultBeatsContainer' );
-var beatNames = Beats.getNames();
-
-for (var a = 0 ; a < beatNames.length ; a++)
-    {
-    Menu.addBeat( beatNames[ a ], beatsContainer );
-    }
 
 
     // save beat
@@ -200,9 +178,12 @@ SELECTED_BEAT = beatHtmlElement;
 };
 
 
-
-Menu.addBeat = function( name, container )
+/**
+ * Add a beat to the beat list. On click on that element it loads that particular beat.
+ */
+Menu.addBeat = function( name )
 {
+var container = document.querySelector( '#BeatsContainer' );
 var beat = document.createElement( 'span' );
 
 beat.className = 'button';
@@ -211,7 +192,7 @@ beat.onclick = function()
     {
     DrumMachine.selectBeat( name );
     Menu.selectBeat( beat );
-        
+
     var currentBeat = Beats.getCurrent();
 
     BEATS_ELEMENT.value           = currentBeat.how_many_beats;

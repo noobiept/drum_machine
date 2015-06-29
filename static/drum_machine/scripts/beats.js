@@ -5,7 +5,7 @@ function Beats()
 
 }
 
-var ALL = {
+var EXAMPLE_BEATS = {
     beat1: {
         crash      : [ 1, 0, 0, 0, 1, 0, 0, 0 ],
         splash     : [ 0, 0, 0, 1, 0, 0, 0, 1 ],
@@ -87,104 +87,123 @@ var ALL = {
         name: 'beat5'
     }
 };
+var ALL_BEATS = {};         // all the loaded beats
+var CURRENT_BEAT = null;    // current active beat
 
-var CURRENT_BEAT = null;
 
+/**
+ * Load the saved beats, and determine the starting beat (that is selected).
+ */
 Beats.init = function()
 {
-if ( STARTING_BEAT )
-    {
-    try {
-        CURRENT_BEAT = deepClone( JSON.parse( STARTING_BEAT ) );
-    }
 
-    catch (error)
+    // load the user's beats
+    // if there's no one logged in, then use the example beats
+var container = document.querySelector( '#BeatsContainer' );
+
+var loading = document.createElement( 'span' );
+loading.innerHTML = 'loading..';
+
+container.appendChild( loading );
+
+$.ajax({
+    url: '/load_beats',
+    type: 'POST',
+    error: function( jqXHR, textStatus, errorThrown )
         {
-        console.log(error);
-        CURRENT_BEAT = deepClone( ALL.beat1 );
-        }
-    }
+        console.log( jqXHR.responseText, textStatus, errorThrown );
+        container.removeChild( loading );
 
-else
-    {
-    CURRENT_BEAT = deepClone( ALL.beat1 );
-    }
+            // fail to load, so just add the example beats
+        Beats.addExampleBeats();
+        DrumMachine.selectStartingBeat();
+        },
+    success: function( data, textStatus, jqXHR )
+        {
+        container.removeChild( loading );
 
-    // if this element is not present, means no user is currently logged in, so no point in trying to load the custom beats
-var container = document.querySelector( '#CustomBeatsContainer' );
-
-if ( container )
-    {
-    var loading = document.createElement( 'span' );
-    loading.innerHTML = 'loading..';
-
-    container.appendChild( loading );
-
-    $.ajax({
-        url: '/load_beats',
-        type: 'POST',
-        error: function( jqXHR, textStatus, errorThrown )
+        if ( !_.isArray( data ) )
             {
-            console.log( jqXHR.responseText, textStatus, errorThrown );
-            container.removeChild( loading );
-            },
-        success: function( data, textStatus, jqXHR )
-            {
-            container.removeChild( loading );
-
-            if ( !_.isArray( data ) )
-                {
-                console.log( 'error loading beats, data not an array.' );
-                return;
-                }
-
-            try {
-                for (var a = 0 ; a < data.length ; a++)
-                    {
-                    data[ a ].description = JSON.parse( data[ a ].description );
-                    }
+            console.log( 'error loading beats, data not an array.' );
+            return;
             }
 
-            catch( error )
-                {
-                console.log('ERROR:', error);
-                return;
-                }
+
+            // there are no beats saved, add the example beats
+        if ( data.length === 0 )
+            {
+            Beats.addExampleBeats();
+            DrumMachine.selectStartingBeat();
+            return;
+            }
 
 
+            // parse the beats
+        try {
             for (var a = 0 ; a < data.length ; a++)
                 {
-                var beat = data[ a ];
-
-                var description = beat.description;
-
-                Beats.add( description );
-                Menu.addBeat( description.name, container );
+                data[ a ].description = JSON.parse( data[ a ].description );
                 }
+        }
+
+        catch( error )
+            {
+            console.log( 'ERROR:', error );
+            return;
             }
-        });
+
+
+            // add the beats loaded
+        for (var a = 0 ; a < data.length ; a++)
+            {
+            var beat = data[ a ];
+
+            Beats.add( beat.description );
+            }
+
+        DrumMachine.selectStartingBeat();
+        }
+    });
+};
+
+
+Beats.addExampleBeats = function()
+{
+var exampleNames = Object.keys( EXAMPLE_BEATS );
+
+for (var a = 0 ; a < exampleNames.length ; a++)
+    {
+    var name = exampleNames[ a ];
+    Beats.add( EXAMPLE_BEATS[ name ] );
     }
 };
 
 
 Beats.getNames = function()
 {
-return _.keys( ALL );
+return _.keys( ALL_BEATS );
 };
 
+
+/**
+ * Get current beat info.
+ */
 Beats.getCurrent = function()
 {
 return CURRENT_BEAT;
 };
 
 
+/**
+ * Set a beat as the current one, and return the beat info.
+ */
 Beats.setCurrent = function( name )
 {
-var beat = ALL[ name ];
+var beat = ALL_BEATS[ name ];
 
 if ( beat )
     {
-    CURRENT_BEAT = deepClone( ALL[ name ] );
+    CURRENT_BEAT = deepClone( ALL_BEATS[ name ] );
 
     return CURRENT_BEAT;
     }
@@ -195,9 +214,15 @@ else
     }
 };
 
+
+/**
+ * Add a beat to the available beats list.
+ */
 Beats.add = function( beat )
 {
-ALL[ beat.name ] = beat;
+ALL_BEATS[ beat.name ] = beat;
+
+Menu.addBeat( beat.name );
 };
 
 

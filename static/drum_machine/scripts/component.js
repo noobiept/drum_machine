@@ -1,6 +1,6 @@
 (function(window)
 {
-function Component( name, beat )
+function Component( name )
 {
 var _this = this;
 
@@ -93,9 +93,8 @@ this.row = row;
 this.name = name;
 this.is_muted = false;
 this.mute_element = mute;
-
-this.setBeat( beat );
 }
+
 
 Component.prototype.clearBeat = function()
 {

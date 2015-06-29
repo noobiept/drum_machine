@@ -41,14 +41,9 @@
         <input type="range" id="StepsPerBeat" min="1" max="6" step="1" />
         <span id="StepsPerBeatValue"></span>
     </div>
-    <div id="DefaultBeatsContainer">
-        <span>examples</span>
+    <div id="BeatsContainer">
+        <span>beats</span>
     </div>
-    {% if user.is_authenticated %}
-        <div id="CustomBeatsContainer">
-            <span>beats</span>
-        </div>
-    {% endif %}
 
     {% if user.is_authenticated %}
         <div id="SaveBeatContainer">

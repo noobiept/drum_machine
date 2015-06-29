@@ -15,23 +15,20 @@ var COMPONENTS = [];
 
 DrumMachine.init = function()
 {
-Beats.init();
-
+    // add the drum components
 var componentsInfo = [
      'crash', 'splash', 'ride',
      'hi_hat', 'snare', 'tom_high',
      'tom_medium', 'tom_low', 'bass'
     ];
-var beat = Beats.getCurrent();
 
 for (var a = 0 ; a < componentsInfo.length ; a++)
     {
     var name = componentsInfo[ a ];
 
-    COMPONENTS.push( new Component( name, beat[ name ] ) );
+    COMPONENTS.push( new Component( name ) );
     }
 
-var beatLength = beat.how_many_beats * beat.steps_per_beat;
 var table = document.querySelector( '#DrumTable' );
 var row = document.createElement( 'tr' );
 var th = document.createElement( 'th' );
@@ -39,15 +36,10 @@ var th = document.createElement( 'th' );
 row.className = 'PlayingStatus';
 row.appendChild( th );
 
-for (var a = 0 ; a < beatLength ; a++)
-    {
-    var td = document.createElement( 'td' );
-
-    row.appendChild( td );
-    }
-
 table.appendChild( row );
 
+
+    // set the keyboard shortcuts
 window.onkeyup = keyboardShortcuts;
 
 var saveContainer = document.querySelector( '#SaveBeatContainer' );
@@ -57,7 +49,9 @@ if ( saveContainer )
     SAVE_MESSAGE = new Message( saveContainer );
     }
 
+
 Menu.init();
+Beats.init();
 };
 
 
@@ -129,12 +123,35 @@ Audio.stop();
 };
 
 
+/**
+ * Load a specific beat (set by 'STARTING_BEAT'), or simply load one of the beats available.
+ */
+DrumMachine.selectStartingBeat = function()
+{
+if ( window.STARTING_BEAT )
+    {
+    DrumMachine.selectBeat( window.STARTING_BEAT );
+    }
+
+else
+    {
+    var names = Beats.getNames();
+
+    DrumMachine.selectBeat( names[ 0 ] );
+    }
+};
+
+
+/**
+ * Add to the drum machine a beat (so that it can be played/changed/etc).
+ */
 DrumMachine.selectBeat = function( beatName )
 {
 var beat = Beats.setCurrent( beatName );
 
 if ( beat === null )
     {
+    console.log( 'Failed to select a beat: ' + beatName );
     return;
     }
 
@@ -323,10 +340,7 @@ $.ajax({
             {
             SAVE_MESSAGE.show( name + ' beat saved' );
 
-            var container = document.querySelector( '#CustomBeatsContainer' );
-
             Beats.add( clone );
-            Menu.addBeat( name, container );
             }
     });
 };

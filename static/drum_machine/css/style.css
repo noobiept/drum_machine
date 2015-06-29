@@ -70,7 +70,7 @@
     background-color: rgba(165, 48, 50, 0.26);
     }
 
-#DefaultBeatsContainer .button, #CustomBeatsContainer .button
+#BeatsContainer .button
     {
     padding: 0 5px;
     }

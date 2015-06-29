@@ -1,6 +1,7 @@
     // these variables can be changed in server templates
 var STARTING_BEAT = '';
 
+
 window.onload = function()
 {
 Audio.load( DrumMachine.init, '/static/' );
