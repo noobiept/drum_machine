@@ -166,7 +166,8 @@ var playing = document.querySelector( '.PlayingStatus' );
 var nodes = playing.childNodes;
 var beatLength = beat.how_many_beats * beat.steps_per_beat;
 
-    // -1 because of the th
+    // add/remove positions to the 'playing status' line
+    // -1 because of the first column (with the component options)
 while ( nodes.length - 1 !== beatLength )
     {
     if ( nodes.length - 1 < beatLength )
@@ -179,6 +180,10 @@ while ( nodes.length - 1 !== beatLength )
         removePlayingStatusPosition();
         }
     }
+
+    // update the menu
+    // select the beat name in the beats list
+Menu.selectBeat( beatName );
 };
 
 

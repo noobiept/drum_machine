@@ -14,6 +14,7 @@ var STEPS_VALUE_ELEMENT = null;
 var TEMPO_ELEMENT = null;
 var TEMPO_VALUE_ELEMENT = null;
 var SELECTED_BEAT = null;       // reference to the html element of the current selected beat (or null if its a custom beat)
+var BEATS_CONTAINER = null;
 
 
 Menu.init = function()
@@ -98,6 +99,10 @@ steps.oninput = function( event )
 container.style.display = 'block';
 
 
+    // beats container
+BEATS_CONTAINER = container.querySelector( '#BeatsContainer' );
+
+
     // save beat
 var save = container.querySelector( '#SaveBeat' );
 
@@ -150,7 +155,7 @@ else
     }
 };
 
-Menu.stopPlaying = function()
+Menu.stopPlaying = function()   //HERE shouldn't be in the menu
 {
 IS_PLAYING = false;
 PLAY_ELEMENT.innerHTML = 'Play';
@@ -169,12 +174,41 @@ if ( SELECTED_BEAT )
 };
 
 
-Menu.selectBeat = function( beatHtmlElement )
+/**
+ * Select a beat name element in the beats list, and updates the menu controls according to the current beat.
+ */
+Menu.selectBeat = function( beatName )
 {
 Menu.removeSelectedBeat();
 
-beatHtmlElement.classList.add( 'selected' );
-SELECTED_BEAT = beatHtmlElement;
+    // find the html element
+var beatElement;
+
+for (var a = BEATS_CONTAINER.children.length - 1 ; a >= 0 ; a--)
+    {
+    beatElement = BEATS_CONTAINER.children[ a ];
+
+    if ( beatElement.innerHTML === beatName )
+        {
+        break;
+        }
+    }
+
+
+    // new selected beat
+beatElement.classList.add( 'selected' );
+SELECTED_BEAT = beatElement;
+
+    // update the menu with the correct values
+var currentBeat = Beats.getCurrent();
+
+BEATS_ELEMENT.value           = currentBeat.how_many_beats;
+BEATS_VALUE_ELEMENT.innerHTML = currentBeat.how_many_beats;
+STEPS_ELEMENT.value           = currentBeat.steps_per_beat;
+STEPS_VALUE_ELEMENT.innerHTML = currentBeat.steps_per_beat;
+TEMPO_ELEMENT.value           = currentBeat.tempo;
+TEMPO_VALUE_ELEMENT.innerHTML = currentBeat.tempo;
+Menu.stopPlaying();
 };
 
 
@@ -183,7 +217,6 @@ SELECTED_BEAT = beatHtmlElement;
  */
 Menu.addBeat = function( name )
 {
-var container = document.querySelector( '#BeatsContainer' );
 var beat = document.createElement( 'span' );
 
 beat.className = 'button';
@@ -191,20 +224,9 @@ beat.innerHTML = name;
 beat.onclick = function()
     {
     DrumMachine.selectBeat( name );
-    Menu.selectBeat( beat );
-
-    var currentBeat = Beats.getCurrent();
-
-    BEATS_ELEMENT.value           = currentBeat.how_many_beats;
-    BEATS_VALUE_ELEMENT.innerHTML = currentBeat.how_many_beats;
-    STEPS_ELEMENT.value           = currentBeat.steps_per_beat;
-    STEPS_VALUE_ELEMENT.innerHTML = currentBeat.steps_per_beat;
-    TEMPO_ELEMENT.value           = currentBeat.tempo;
-    TEMPO_VALUE_ELEMENT.innerHTML = currentBeat.tempo;
-    Menu.stopPlaying();
     };
 
-container.appendChild( beat );
+BEATS_CONTAINER.appendChild( beat );
 };
 
 
