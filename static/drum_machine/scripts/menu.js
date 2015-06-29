@@ -151,7 +151,7 @@ else
     IS_PLAYING = true;
     PLAY_ELEMENT.innerHTML = 'Stop';
 
-    DrumMachine.playAgain();
+    DrumMachine.startPlayLoop();
     }
 };
 

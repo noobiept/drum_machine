@@ -93,19 +93,22 @@ this.row = row;
 this.name = name;
 this.is_muted = false;
 this.mute_element = mute;
+this.notes_elements = [];   // reference to the 'td' html elements, that represent a note
+this.emphasized_element = null; // 'td' html element that is currently on the spotlight
+this.beat = [];
 }
 
 
 Component.prototype.clearBeat = function()
 {
-var td = this.row.querySelectorAll( 'td' );
-
-for (var a = 0 ; a < td.length ; a++)
+for (var a = 0 ; a < this.notes_elements.length ; a++)
     {
-    this.row.removeChild( td[ a ] );
+    this.row.removeChild( this.notes_elements[ a ] );
     }
 
-this.beat = [];
+this.notes_elements.length = 0;
+this.beat.length = 0;
+this.emphasized_element = null;
 };
 
 
@@ -139,11 +142,36 @@ for (var a = 0 ; a < beat.length ; a++)
         }
 
     row.appendChild( data );
+    this.notes_elements.push( data );
     }
 
 this.beat = beat;
 };
 
+
+/**
+ * Emphasize the current position/note that is being played.
+ */
+Component.prototype.emphasizePosition = function( position )
+{
+this.clearEmphasis();
+
+var element = this.notes_elements[ position ];
+element.classList.add( 'CurrentNote' );
+
+this.emphasized_element = element;
+};
+
+
+Component.prototype.clearEmphasis = function()
+{
+if ( this.emphasized_element )
+    {
+    this.emphasized_element.classList.remove( 'CurrentNote' );
+    }
+
+this.emphasized_element = null;
+};
 
 
 Component.prototype.addPosition = function()
@@ -158,7 +186,9 @@ data.innerHTML = ' ';
 this.beat.push( 0 );
 
 this.row.appendChild( data );
+this.notes_elements.push( data );
 };
+
 
 Component.prototype.removeLastPosition = function()
 {
@@ -169,8 +199,8 @@ if ( row.childNodes.length > 0 )
     row.removeChild( row.childNodes[ row.childNodes.length - 1 ] );
 
     this.beat.pop();
+    this.notes_elements.pop();
     }
-
 };
 
 

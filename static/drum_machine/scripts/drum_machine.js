@@ -29,15 +29,6 @@ for (var a = 0 ; a < componentsInfo.length ; a++)
     COMPONENTS.push( new Component( name ) );
     }
 
-var table = document.querySelector( '#DrumTable' );
-var row = document.createElement( 'tr' );
-var th = document.createElement( 'th' );
-
-row.className = 'PlayingStatus';
-row.appendChild( th );
-
-table.appendChild( row );
-
 
     // set the keyboard shortcuts
 window.onkeyup = keyboardShortcuts;
@@ -64,37 +55,29 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
 }
 
 
-DrumMachine.playAgain = function()
+DrumMachine.startPlayLoop = function()
 {
 DrumMachine.stop();
 
 var beat = Beats.getCurrent();
-
 var interval = 60 / beat.tempo * beat.how_many_beats * 1000;
 
-var position = 0;
+var playPosition = 0;
 var totalNotes = beat.how_many_beats * beat.steps_per_beat;
-var current = null;
 
+    // emphasize the column that is being currently played
 var emphasizeCurrentNote = function()
     {
-        // it starts at 1, and there's the th as well, so +2
-    var childPosition = position + 2;
-    var element = document.querySelector( '.PlayingStatus td:nth-child(' + childPosition + ')' );
-
-    if ( current )
+    for (var a = COMPONENTS.length - 1 ; a >= 0 ; a--)
         {
-        current.classList.remove( 'CurrentNote' );
+        COMPONENTS[ a ].emphasizePosition( playPosition );
         }
 
-    element.classList.add( 'CurrentNote' );
-    current = element;
+    playPosition++;
 
-    position++;
-
-    if ( position >= totalNotes )
+    if ( playPosition >= totalNotes )
         {
-        position = 0;
+        playPosition = 0;
         }
     };
 
@@ -112,12 +95,12 @@ DrumMachine.stop = function()
 window.clearInterval( INTERVAL_F );
 window.clearInterval( INDIVIDUAL_NOTE_F );
 
-var playing = document.querySelector( '.CurrentNote' );
 
-if ( playing )
+for (var a = COMPONENTS.length - 1 ; a >= 0 ; a--)
     {
-    playing.classList.remove( 'CurrentNote' );
+    COMPONENTS[ a ].clearEmphasis();
     }
+
 
 Audio.stop();
 };
@@ -160,25 +143,6 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
     var component = COMPONENTS[ a ];
 
     component.setBeat( beat[ component.name ] );
-    }
-
-var playing = document.querySelector( '.PlayingStatus' );
-var nodes = playing.childNodes;
-var beatLength = beat.how_many_beats * beat.steps_per_beat;
-
-    // add/remove positions to the 'playing status' line
-    // -1 because of the first column (with the component options)
-while ( nodes.length - 1 !== beatLength )
-    {
-    if ( nodes.length - 1 < beatLength )
-        {
-        addPlayingStatusPosition();
-        }
-
-    else
-        {
-        removePlayingStatusPosition();
-        }
     }
 
     // update the menu
@@ -246,8 +210,6 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
     {
     COMPONENTS[ a ].addPosition();
     }
-
-addPlayingStatusPosition();
 }
 
 
@@ -258,26 +220,6 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
     {
     COMPONENTS[ a ].removeLastPosition();
     }
-
-removePlayingStatusPosition();
-}
-
-
-
-function addPlayingStatusPosition()
-{
-var playing = document.querySelector( '.PlayingStatus' );
-var td = document.createElement( 'td' );
-
-playing.appendChild( td );
-}
-
-
-function removePlayingStatusPosition()
-{
-var playing = document.querySelector( '.PlayingStatus' );
-
-playing.removeChild( playing.childNodes[ playing.childNodes.length - 1 ] );
 }
 
 
