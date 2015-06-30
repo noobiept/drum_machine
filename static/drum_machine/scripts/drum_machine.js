@@ -285,9 +285,10 @@ $.ajax({
             },
         success: function( data, textStatus, jqXHR )
             {
-            SAVE_MESSAGE.show( name + ' beat saved' );
+            SAVE_MESSAGE.show( 'beat saved: ' + name );
 
             Beats.add( clone );
+            Menu.selectBeat( name );
             }
     });
 };

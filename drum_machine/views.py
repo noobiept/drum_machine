@@ -75,14 +75,22 @@ def save_beat( request ):
             if not description or not name:
                 continue
 
+            count += 1
+
                 # check if there's a beat with the same name
             try:
-                request.user.beat_set.get( name= name )
+                beat = request.user.beat_set.get( name= name )
 
+                # create a new beat
             except Beat.DoesNotExist:
 
-                count += 1
                 beat = Beat( user= request.user, name= name, description= description )
+                beat.save()
+
+                # change the existing beat description
+            else:
+
+                beat.description = description
                 beat.save()
 
 

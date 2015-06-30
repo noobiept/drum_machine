@@ -245,9 +245,19 @@ else
  */
 Beats.add = function( beat )
 {
-ALL_BEATS[ beat.name ] = beat;
+var name = beat.name;
 
-Menu.addBeat( beat.name );
+
+var previous = ALL_BEATS[ name ];
+
+    // check if we're changing an existing beat, or add a new one
+    // only need to add a new beat to the menu if it is indeed a new one
+if ( !previous )
+    {
+    Menu.addBeat( beat.name );
+    }
+
+ALL_BEATS[ name ] = beat;
 };
 
 
