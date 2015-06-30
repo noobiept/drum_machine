@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load humanize %}
 
+{% block scripts %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/rate.js' %}"></script>
+{% endblock %}
+
+
 {% block content %}
 
     <h2>
@@ -30,22 +36,7 @@
         </ul>
     {% endif %}
 
-<h2>Latest beats</h2>
-{% if beats %}
-    <table>
-        {% for beat in beats %}
-            <tr>
-                <td><a href="{{ beat.get_url }}">{{ beat.name }}</a></td>
-                <td>{{ beat.date_created|naturaltime }}</td>
-                {% if user.username == pageUser.username %}
-                    <td><a href="{% url 'remove_beat' beat.id %}?next={{ request.get_full_path|urlencode }}">remove</a></td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p>No beats.</p>
-{% endif %}
+{% include "beats_table.html" with title="Latest Beats" %}
 
 <div>
     <a href="{% url 'accounts:all_beats' pageUser.username %}">All beats</a>

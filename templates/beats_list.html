@@ -1,43 +1,10 @@
 {% extends 'base.html' %}
-{% load humanize %}
 
 {% block scripts %}
     {% load static %}
     <script type="text/javascript" src="{% static 'js/rate.js' %}"></script>
 {% endblock %}
 
-
 {% block content %}
-
-<h2>Beats</h2>
-
-{% if beats %}
-    <table>
-        {% for beat in beats %}
-            <tr>
-                <td><a href="{{ beat.get_url }}">{{ beat.name }}</a></td>
-                <td><a href="{{ beat.user.get_url }}">{{ beat.user }}</a></td>
-                <td>{{ beat.date_created|naturaltime }}</td>
-
-                <td>Current rate:
-                    {% if beat.get_score >= 0 %}
-                        {{ beat.get_score|floatformat:"1" }}
-                    {% else %}
-                        --
-                    {% endif %}
-                </td>
-
-                {% if user.is_authenticated %}
-                    {% if user.username == beat.user.username %}
-                        <td><a href="{% url 'remove_beat' beat.id %}?next={{ request.get_full_path|urlencode }}">remove</a></td>
-                    {% else %}
-                        <td class="Rate" data-beatId="{{ beat.id }}" data-next="{{ request.get_full_path|urlencode }}"></td>
-                    {% endif %}
-                {% endif %}
-            </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p>No beats yet.</p>
-{% endif %}
+    {% include "beats_table.html" with title="Beats" %}
 {% endblock %}

@@ -1,28 +1,10 @@
 {% extends "base.html" %}
-{% load humanize %}
+
+{% block scripts %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/rate.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-
-<h1>All Beats</h1>
-
-{% if beats %}
-
-    <table>
-        {% for beat in beats %}
-            <tr>
-                <td><a href="{{ beat.get_url }}">{{ beat.name }}</a></td>
-                <td>{{ beat.date_created|naturaltime }}</td>
-                {% if user.username == pageUser.username %}
-                    <td><a href="{% url 'remove_beat' beat.id %}?next={{ request.get_full_path|urlencode }}">remove</a></td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-    </table>
-
-{% else %}
-
-    <p>No beats yet.</p>
-
-{% endif %}
-
+    {% include "beats_table.html" with title="All Beats" %}
 {% endblock %}
