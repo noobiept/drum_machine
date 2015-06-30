@@ -3,14 +3,19 @@
 <h2>{{ title }}</h2>
 
 {% if beats %}
-    <table>
+    <table id="BeatsTable">
+        <tr>
+            <th class="button">Name</th>
+            <th class="button">User</th>
+            <th class="button">Date Created</th>
+            <th class="button">Rate</th>
+        </tr>
         {% for beat in beats %}
             <tr>
-                <td><a href="{{ beat.get_url }}">{{ beat.name }}</a></td>
-                <td><a href="{{ beat.user.get_url }}">{{ beat.user }}</a></td>
-                <td>{{ beat.date_created|naturaltime }}</td>
-
-                <td>Rate:
+                <td data-data="{{ beat.name }}"><a href="{{ beat.get_url }}">{{ beat.name }}</a></td>
+                <td data-data="{{ beat.user }}"><a href="{{ beat.user.get_url }}">{{ beat.user }}</a></td>
+                <td data-data="{{ beat.date_created|date:"U" }}">{{ beat.date_created|naturaltime }}</td>
+                <td data-data="{{ beat.get_score }}">
                     {% if beat.get_score >= 0 %}
                         {{ beat.get_score|floatformat:"1" }}
                     {% else %}

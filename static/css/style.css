@@ -7,3 +7,81 @@
     {
     margin-bottom: 20px;
     }
+
+
+.ComponentRow td
+    {
+    cursor: pointer;
+    }
+
+#DrumTable
+    {
+    border-collapse: collapse;
+    }
+
+#DrumTable tr:nth-child(even)
+    {
+    background-color: rgba(182, 221, 237, 0.30);
+    }
+
+#DrumTable td, #DrumTable th
+    {
+    border: 1px solid black;
+    padding: 10px;
+    min-width: 15px;
+    height: 15px;
+    }
+
+#DrumTable select
+    {
+    font-size: 20px;
+    }
+
+#DrumTable th
+    {
+    min-width: 230px;
+    text-align: right;
+    }
+
+#DrumTable th input
+    {
+    width: 70px;
+    }
+
+.button
+    {
+    cursor: pointer;
+    color: blue;
+    margin: 0 3px;
+    }
+
+.button:hover
+    {
+    text-decoration: underline;
+    }
+
+#DrumMenu
+    {
+    margin-top: 20px;
+    display: none;
+    }
+
+.BeatColumn
+    {
+    background-color: rgba(167, 165, 237, 0.50);
+    }
+
+.CurrentNote
+    {
+    background-color: rgba(237, 133, 105, 0.50);
+    }
+
+.selected
+    {
+    background-color: rgba(165, 48, 50, 0.26);
+    }
+
+#BeatsContainer .button
+    {
+    padding: 0 5px;
+    }
