@@ -15,3 +15,27 @@ class Beat( models.Model ):
 
     def get_url(self):
         return reverse( 'open_beat', args= [ self.id ] )
+
+    def get_score(self):
+        allVotes = self.vote_set.all()
+        length = len( allVotes )
+
+            # means there is no score yet
+        if length == 0:
+            return -1
+
+            # do the average
+        else:
+            count = 0
+
+            for vote in allVotes:
+                count += vote.score
+
+            return count / length
+
+
+class Vote( models.Model ):
+
+    user = models.ForeignKey( settings.AUTH_USER_MODEL )
+    beat = models.ForeignKey( Beat )
+    score = models.IntegerField()

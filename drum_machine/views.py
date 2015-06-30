@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 import json
 
 import drum_machine.utilities as utilities
-from drum_machine.models import Beat
+from drum_machine.models import Beat, Vote
 
 
 def home( request ):
@@ -118,6 +118,43 @@ def remove_beat( request, beatId ):
     else:
         beat.delete()
         utilities.set_message( request, 'Beat deleted.' )
+
+        redirect = request.GET.get( 'next', '/' )
+
+        return HttpResponseRedirect( redirect )
+
+
+@login_required
+def rate_beat( request, beatId, rateValue ):
+
+    try:
+        beat = Beat.objects.get( id= beatId )
+
+    except Beat.DoesNotExist:
+        raise Http404( "Beat not found." )
+
+    else:
+        rateValue = int( rateValue )
+
+        if rateValue < 0 or rateValue > 5:
+            return HttpResponseBadRequest( 'Rating needs to be between 0 and 5.' )
+
+            # check if this user has already rated the beat before
+        try:
+            vote = Vote.objects.get( user= request.user, beat= beat )
+
+            # first time voting
+        except Vote.DoesNotExist:
+            vote = Vote( user= request.user, beat= beat, score= rateValue )
+            vote.save()
+
+            # change the rating
+        else:
+            vote.score = rateValue
+            vote.save()
+
+
+        utilities.set_message( request, 'Rate completed.' )
 
         redirect = request.GET.get( 'next', '/' )
 
