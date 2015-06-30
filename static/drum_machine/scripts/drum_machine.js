@@ -267,17 +267,17 @@ currentBeat.name = name;
 
 var clone = deepClone( currentBeat );
 
-var beatDescription = {
-    description: JSON.stringify( currentBeat ),
-    name: name
-};
+var beats = [
+        { name: name, description: JSON.stringify( currentBeat ) }
+    ];
+
 
 SAVE_MESSAGE.show( 'Saving..' );
 
 $.ajax({
         url: '/save_beat',
         type: 'POST',
-        data: beatDescription,
+        data: { beats: JSON.stringify( beats ) },
         error: function( jqXHR, textStatus, errorThrown )
             {
             SAVE_MESSAGE.show( jqXHR.responseText );

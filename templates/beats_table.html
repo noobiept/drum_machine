@@ -10,7 +10,7 @@
                 <td><a href="{{ beat.user.get_url }}">{{ beat.user }}</a></td>
                 <td>{{ beat.date_created|naturaltime }}</td>
 
-                <td>Current rate:
+                <td>Rate:
                     {% if beat.get_score >= 0 %}
                         {{ beat.get_score|floatformat:"1" }}
                     {% else %}

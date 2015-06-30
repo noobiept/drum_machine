@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseBadRequest, HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponseBadRequest, HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.core.urlresolvers import reverse
 
 import json
@@ -37,6 +37,16 @@ def open_beat( request, beatId ):
         return render( request, 'open_beat.html', context )
 
 
+"""
+    Receives data in this format.
+
+    data = {
+        beats: [
+            { 'name': str, 'description': str },
+            # etc
+        ]
+    }
+"""
 def save_beat( request ):
 
     if not request.user.is_authenticated():
@@ -44,25 +54,44 @@ def save_beat( request ):
 
     if request.method == 'POST':
 
-        beatDescription = request.POST.get( 'description' )
-        name = request.POST.get( 'name' )
+        beats = request.POST.get( 'beats' )
 
-        if not beatDescription or not name:
-            return HttpResponseBadRequest( 'missing parameters.' )
+        if not beats:
+            return HttpResponseBadRequest( "Need 'beats' data." )
 
-            # check if there's a beat with the same name
         try:
-            request.user.beat_set.get( name= name )
+            beats = json.loads( beats )
 
-        except Beat.DoesNotExist:
+        except ValueError:
+            return HttpResponseBadRequest( "Invalid 'beats' format." )
 
-            beat = Beat( user= request.user, name= name, description= beatDescription )
-            beat.save()
 
-            return HttpResponse( status= 201 )
+        count = 0   # number of beats saved
 
-        else:
-            return HttpResponseBadRequest( 'A beat with that name already exist (try a different name).' )
+        for beat in beats:
+            name = beat.get( 'name' )
+            description = beat.get( 'description' )
+
+            if not description or not name:
+                continue
+
+                # check if there's a beat with the same name
+            try:
+                request.user.beat_set.get( name= name )
+
+            except Beat.DoesNotExist:
+
+                count += 1
+                beat = Beat( user= request.user, name= name, description= description )
+                beat.save()
+
+
+        response = {
+            'count': count
+        }
+
+        return JsonResponse( response )
+
 
     else:
         return HttpResponseBadRequest( 'Only post requests.' )

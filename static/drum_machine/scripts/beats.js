@@ -133,6 +133,7 @@ $.ajax({
         if ( data.length === 0 )
             {
             Beats.addExampleBeats();
+            Beats.saveExampleBeats();
             DrumMachine.selectStartingBeat();
             return;
             }
@@ -177,6 +178,30 @@ for (var a = 0 ; a < exampleNames.length ; a++)
     Beats.add( EXAMPLE_BEATS[ name ] );
     }
 };
+
+
+/**
+ * When a user doesn't have any beats, we add to his account the example beats (so serve as a base for his own).
+ */
+Beats.saveExampleBeats = function()
+{
+var beats = [
+        { name: 'beat1', description: JSON.stringify( EXAMPLE_BEATS[ 'beat1' ] ) },
+        { name: 'beat2', description: JSON.stringify( EXAMPLE_BEATS[ 'beat2' ] ) },
+        { name: 'beat3', description: JSON.stringify( EXAMPLE_BEATS[ 'beat3' ] ) },
+        { name: 'beat4', description: JSON.stringify( EXAMPLE_BEATS[ 'beat4' ] ) },
+        { name: 'beat5', description: JSON.stringify( EXAMPLE_BEATS[ 'beat5' ] ) }
+    ];
+
+
+$.ajax({
+        url: '/save_beat',
+        type: 'POST',
+        data: { beats: JSON.stringify( beats ) },
+        dataType: 'json'
+    });
+};
+
 
 
 Beats.getNames = function()
