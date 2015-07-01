@@ -3,11 +3,15 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 
+def dateCreated():
+    return timezone.localtime( timezone.now() )
+
+
 class Beat( models.Model ):
 
     user = models.ForeignKey( settings.AUTH_USER_MODEL )
     name = models.CharField( max_length= 50 )
-    date_created = models.DateTimeField( help_text= 'Date Created', default= lambda: timezone.localtime(timezone.now()) )
+    date_created = models.DateTimeField( help_text= 'Date Created', default= dateCreated )
     description = models.CharField( max_length= 200 )
 
     def __unicode__(self):

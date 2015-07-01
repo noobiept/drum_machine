@@ -4,6 +4,11 @@ from django.conf import settings
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
+
+def dateCreated():
+    return timezone.localtime( timezone.now() )
+
+
 class Account( AbstractUser ):
 
     is_moderator = models.BooleanField( default= False )
@@ -18,7 +23,7 @@ class PrivateMessage( models.Model ):
     sender = models.ForeignKey( settings.AUTH_USER_MODEL, related_name= 'sender' )
     title = models.TextField( max_length= 100 )
     content = models.TextField( max_length= 500 )
-    date_created = models.DateTimeField( help_text= 'Date Created', default= lambda: timezone.localtime(timezone.now()) )
+    date_created = models.DateTimeField( help_text= 'Date Created', default= dateCreated )
 
     def __unicode__(self):
         return self.title

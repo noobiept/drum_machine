@@ -34,7 +34,7 @@ else:
     SECRET_KEY = os.environ[ 'SECRET_KEY' ]
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ 'drum-machine.heroku.com', 'drum-machine.herokuapp.com' ]
 
 
 INSTALLED_APPS = (
