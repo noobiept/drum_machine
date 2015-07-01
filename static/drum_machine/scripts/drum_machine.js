@@ -8,6 +8,7 @@ function DrumMachine()
 var IS_PLAYING = false;
 var INTERVAL_F;
 var INDIVIDUAL_NOTE_F;
+var MAX_NAME = 25;      // maximum number of characters that a beat name can have
 
 var SAVE_MESSAGE = null;
 
@@ -294,6 +295,13 @@ if ( !pattern.test( name ) )
     SAVE_MESSAGE.show( 'Need to add a name.' );
     return;
     }
+
+if ( name.length > MAX_NAME )
+    {
+    SAVE_MESSAGE.show( "Can't have a name with so many characters (max: " + MAX_NAME + ').' );
+    return;
+    }
+
 
 var currentBeat = Beats.getCurrent();
 

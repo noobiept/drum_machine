@@ -10,9 +10,9 @@ def dateCreated():
 class Beat( models.Model ):
 
     user = models.ForeignKey( settings.AUTH_USER_MODEL )
-    name = models.CharField( max_length= 50 )
+    name = models.CharField( max_length= 25 )
     date_created = models.DateTimeField( help_text= 'Date Created', default= dateCreated )
-    description = models.CharField( max_length= 400 )
+    description = models.CharField( max_length= 900 )
 
     def __unicode__(self):
         return self.name
