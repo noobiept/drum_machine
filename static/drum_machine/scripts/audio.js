@@ -16,15 +16,7 @@ var GAIN = 1;
 
 Audio.load = function( callback, baseUrl )
 {
-var context = getContext();
-
-if ( context == null )
-    {
-    return;
-    }
-
-
-CONTEXT = context;
+CONTEXT = getContext();
 CALLBACK = callback;
 
 MANIFEST = [
@@ -144,6 +136,9 @@ return AUDIO_BUFFERS[ sound ];
 };
 
 
+/**
+ * Get the audio context. Throws an exception if it is not available.
+ */
 function getContext()
 {
 var contextClass = (window.AudioContext ||
@@ -161,8 +156,8 @@ if ( contextClass )
     }
 else
     {
-    context = null;
-    // Web Audio API is not available. Ask the user to use a supported browser.
+        // web audio api not available
+    throw new Error( 'Web audio api not supported.' );
     }
 
 return context;

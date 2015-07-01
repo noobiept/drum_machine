@@ -143,6 +143,10 @@ range.addEventListener( 'input', function()
     {
     value.innerHTML = range.value;
     });
+range.addEventListener( 'change', function()
+    {
+    value.innerHTML = range.value;
+    });
 
 value.innerHTML = startValue;
 

@@ -4,22 +4,28 @@ var STARTING_BEAT = '';
 
 window.onload = function()
 {
-Audio.load( DrumMachine.init, '/static/' );
+try {
+    Audio.load( DrumMachine.init, '/static/' );
+}
+
+catch( error )
+    {
+    var message = document.createElement( 'h1' );
+
+    message.innerHTML = error.message;
+    document.body.appendChild( message );
+    }
 };
 
 
-
+/**
+ * Global keyboard shortcuts.
+ */
 function keyboardShortcuts( event )
 {
 var key = event.keyCode;
 
-    // disallow keyboard shortcuts when you're changing some option
-if ( document.activeElement.tagName === 'INPUT' )
-    {
-    return;
-    }
-
-if ( key == EVENT_KEY.space )
+if ( key === EVENT_KEY.space )
     {
     DrumMachine.alternatePlayState();
     }

@@ -1,22 +1,40 @@
-#Message
+body
     {
-    background-color: rgba(201, 219, 237, 0.83);
+    font-size: 24px;
     }
+
+.button
+    {
+    cursor: pointer;
+    color: blue;
+    margin: 0 3px;
+    }
+
+.button:hover
+    {
+    text-decoration: underline;
+    }
+
+
+    /* Top Menu */
 
 #Menu
     {
     margin-bottom: 20px;
     }
 
-
-.ComponentRow td
+#Message
     {
-    cursor: pointer;
+    background-color: rgba(201, 219, 237, 0.83);
     }
+
+
+    /* Drum Machine */
 
 #DrumTable
     {
     border-collapse: collapse;
+    text-align: center;
     }
 
 #DrumTable tr:nth-child(even)
@@ -48,32 +66,28 @@
     width: 70px;
     }
 
-.button
+.ComponentRow td
     {
     cursor: pointer;
-    color: blue;
-    margin: 0 3px;
     }
 
-.button:hover
+.BeatColumn
     {
-    text-decoration: underline;
+    background-color: rgba(167, 165, 237, 0.3);
     }
+
+.CurrentNote
+    {
+    background-color: rgba(237, 133, 105, 0.5);
+    }
+
+
+    /* Drum Machine Menu */
 
 #DrumMenu
     {
     margin-top: 20px;
     display: none;
-    }
-
-.BeatColumn
-    {
-    background-color: rgba(167, 165, 237, 0.50);
-    }
-
-.CurrentNote
-    {
-    background-color: rgba(237, 133, 105, 0.50);
     }
 
 .selected
@@ -84,4 +98,24 @@
 #BeatsContainer .button
     {
     padding: 0 5px;
+    }
+
+.value
+    {
+    color: green;
+    font-weight: bold;
+    }
+
+
+    /* Beats Table */
+
+#BeatsTable
+    {
+    text-align: center;
+    }
+
+#BeatsTable th
+    {
+    background-color: rgba(50, 50, 50, 0.1);
+    padding: 0 15px;
     }
