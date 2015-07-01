@@ -142,13 +142,33 @@ Menu.setPlayState( IS_PLAYING );
 
 
 /**
- * Load a specific beat (set by 'STARTING_BEAT'), or simply load one of the beats available.
+ * Load a specific beat (set by 'STARTING_BEAT_ID'), or simply load one of the beats available.
  */
 DrumMachine.selectStartingBeat = function()
 {
-if ( window.STARTING_BEAT )
+if ( window.STARTING_BEAT_ID !== null )
     {
-    DrumMachine.selectBeat( window.STARTING_BEAT );
+    $.ajax({
+        url: '/get_beat/' + window.STARTING_BEAT_ID,
+        type: 'GET',
+        error: function( jqXHR, textStatus, errorThrown )
+            {
+            console.log( jqXHR.responseText, textStatus, errorThrown );
+            SAVE_MESSAGE.show( 'Failed to load the beat.' );
+
+                // load one of the available beats instead
+            var names = Beats.getNames();
+
+            DrumMachine.selectBeat( names[ 0 ] );
+            },
+        success: function( data, textStatus, jqXHR )
+            {
+            var description = JSON.parse( data );
+
+            Beats.add( description );
+            DrumMachine.selectBeat( description.name );
+            }
+        });
     }
 
 else

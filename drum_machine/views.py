@@ -105,6 +105,24 @@ def save_beat( request ):
         return HttpResponseBadRequest( 'Only post requests.' )
 
 
+"""
+    Returns a beat's information.
+"""
+def get_beat( request, beatId ):
+
+    try:
+        beat = Beat.objects.get( id= beatId )
+
+    except Beat.DoesNotExist:
+        return HttpResponseBadRequest( "Didn't find a beat with that id." )
+
+    else:
+        return HttpResponse( beat.description )
+
+
+"""
+    Returns all the beats of the user.
+"""
 def load_beats( request ):
 
     if not request.user.is_authenticated():

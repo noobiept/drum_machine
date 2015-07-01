@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url( r'^beats_list$', 'drum_machine.views.beats_list', name= 'beats_list' ),
     url( r'^remove_beat/(?P<beatId>\w+)$', 'drum_machine.views.remove_beat', name= 'remove_beat' ),
     url( r'^rate_beat/(?P<beatId>\w+)/(?P<rateValue>\d+)$', 'drum_machine.views.rate_beat', name= 'rate_beat' ),
+    url( r'^get_beat/(?P<beatId>\w+)$', 'drum_machine.views.get_beat', name= 'get_beat' ),
 
 
     url( r'^accounts/', include( 'accounts.urls', namespace= 'accounts', app_name= 'accounts' ) ),

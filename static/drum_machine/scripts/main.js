@@ -1,5 +1,5 @@
     // these variables can be changed in server templates
-var STARTING_BEAT = '';
+var STARTING_BEAT_ID = null;
 
 
 window.onload = function()
