@@ -1,27 +1,27 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest, HttpResponse, Http404, HttpResponseRedirect, JsonResponse
-from django.core.urlresolvers import reverse
 
 import json
 
-import drum_machine.utilities as utilities
+from drum_machine import utilities
 from drum_machine.models import Beat, Vote
 
 
 def home( request ):
-
-    context = {
-
-    }
-
+    """
+        The starting point of the drum machine application.
+    """
+    context = {}
     utilities.get_message( request, context )
 
     return render( request, 'home.html', context )
 
 
 def open_beat( request, beatId ):
-
+    """
+        Open the application with a starting beat.
+    """
     try:
         beat = Beat.objects.get( id= beatId )
 
@@ -29,7 +29,6 @@ def open_beat( request, beatId ):
         raise Http404
 
     else:
-
         context = {
             'beat': beat
         }
@@ -37,18 +36,23 @@ def open_beat( request, beatId ):
         return render( request, 'open_beat.html', context )
 
 
-"""
-    Receives data in this format.
-
-    data = {
-        beats: [
-            { 'name': str, 'description': str },
-            # etc
-        ]
-    }
-"""
 def save_beat( request ):
+    """
+        Save a beat to the database.
 
+        Receives data in this format:
+            data = {
+                beats: [
+                    { 'name': str, 'description': str },    # description is a json string
+                    # etc
+                ]
+            }
+
+        Returns a JSON:
+            response = {
+                'count': int    # number of beats saved
+            }
+    """
     if not request.user.is_authenticated():
         return HttpResponseBadRequest( 'Need to be authenticated.' )
 
@@ -105,11 +109,10 @@ def save_beat( request ):
         return HttpResponseBadRequest( 'Only post requests.' )
 
 
-"""
-    Returns a beat's information.
-"""
 def get_beat( request, beatId ):
-
+    """
+        Returns a beat's information/description.
+    """
     try:
         beat = Beat.objects.get( id= beatId )
 
@@ -120,11 +123,10 @@ def get_beat( request, beatId ):
         return HttpResponse( beat.description )
 
 
-"""
-    Returns all the beats of the user.
-"""
 def load_beats( request ):
-
+    """
+        Returns all the beats of the user.
+    """
     if not request.user.is_authenticated():
         return HttpResponseBadRequest( 'Need to be authenticated.' )
 
@@ -149,7 +151,9 @@ def load_beats( request ):
 
 
 def beats_list( request ):
-
+    """
+        A list of all the beats (from all the users).
+    """
     allBeats = Beat.objects.order_by( '-date_created' )
 
     context = {
@@ -163,7 +167,9 @@ def beats_list( request ):
 
 @login_required
 def remove_beat( request, beatId ):
-
+    """
+        Remove a beat.
+    """
     try:
         beat = request.user.beat_set.get( id= beatId )
 
@@ -181,7 +187,9 @@ def remove_beat( request, beatId ):
 
 @login_required
 def rate_beat( request, beatId, rateValue ):
-
+    """
+        Rate a beat with a value from 0 to 5.
+    """
     try:
         beat = Beat.objects.get( id= beatId )
 
@@ -210,7 +218,6 @@ def rate_beat( request, beatId, rateValue ):
 
 
         utilities.set_message( request, 'Rate completed.' )
-
         redirect = request.GET.get( 'next', '/' )
 
         return HttpResponseRedirect( redirect )

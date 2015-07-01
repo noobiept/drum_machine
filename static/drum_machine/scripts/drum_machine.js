@@ -11,10 +11,12 @@ var INDIVIDUAL_NOTE_F;
 var MAX_NAME = 25;      // maximum number of characters that a beat name can have
 
 var SAVE_MESSAGE = null;
-
 var COMPONENTS = [];
 
 
+/**
+ * Initialize the drum machine application.
+ */
 DrumMachine.init = function()
 {
     // add the drum components
@@ -48,6 +50,9 @@ Beats.init();
 };
 
 
+/**
+ * Start playing the beat sounds.
+ */
 function start()
 {
 for (var a = 0 ; a < COMPONENTS.length ; a++)
@@ -206,7 +211,9 @@ Menu.selectBeat( beatName );
 };
 
 
-
+/**
+ * Change the beat length (how many notes).
+ */
 function setBeatLength( nextLength )
 {
 var beat = Beats.getCurrent();
@@ -229,10 +236,10 @@ while ( difference != 0 )
     }
 }
 
-/*
-    Re-sets the css class on the first column of a new beat
- */
 
+/**
+ * Re-sets the css class on the columns of the stressed notes.
+ */
 function setBeatCssClass( beat )
 {
 var steps = beat.steps_per_beat;
@@ -259,6 +266,9 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
 }
 
 
+/**
+ * Add a new position at the end of the beat.
+ */
 function addPosition()
 {
 for (var a = 0 ; a < COMPONENTS.length ; a++)
@@ -268,7 +278,9 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
 }
 
 
-
+/**
+ * Remove the last position of the beat.
+ */
 function removeLastPosition()
 {
 for (var a = 0 ; a < COMPONENTS.length ; a++)
@@ -278,6 +290,9 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
 }
 
 
+/**
+ * Set the beats per pattern (number of divisions within the beat).
+ */
 DrumMachine.setBeatsPerPattern = function( howMany )
 {
 DrumMachine.stop();
@@ -292,6 +307,9 @@ setBeatCssClass( beat );
 };
 
 
+/**
+ * Set the steps per beat (notes per division).
+ */
 DrumMachine.setStepsPerBeat = function( howMany )
 {
 DrumMachine.stop();
@@ -306,6 +324,9 @@ setBeatCssClass( beat );
 };
 
 
+/**
+ * Save the current beat to the server.
+ */
 DrumMachine.saveBeat = function( name )
 {
 var pattern = /\s*\w+\s*/;
@@ -357,5 +378,4 @@ $.ajax({
 
 
 window.DrumMachine = DrumMachine;
-
 }(window));

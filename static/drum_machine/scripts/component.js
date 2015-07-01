@@ -99,6 +99,9 @@ this.beat = [];
 }
 
 
+/**
+ * Remove all the notes/positions associated.
+ */
 Component.prototype.clearBeat = function()
 {
 for (var a = 0 ; a < this.notes_elements.length ; a++)
@@ -112,6 +115,9 @@ this.emphasized_element = null;
 };
 
 
+/**
+ * Add a beat (adds the corresponding table line).
+ */
 Component.prototype.setBeat = function( beat )
 {
 this.clearBeat();
@@ -163,6 +169,10 @@ this.emphasized_element = element;
 };
 
 
+/**
+ * Remove the emphasis of the current node being played.
+ * This is done when moving to the next note, or when stop playing altogether.
+ */
 Component.prototype.clearEmphasis = function()
 {
 if ( this.emphasized_element )
@@ -174,6 +184,9 @@ this.emphasized_element = null;
 };
 
 
+/**
+ * Add an extra position at the end of the beat/table line.
+ */
 Component.prototype.addPosition = function()
 {
 var _this = this;
@@ -190,6 +203,9 @@ this.notes_elements.push( data );
 };
 
 
+/**
+ * Remove the last position of the beat/table line.
+ */
 Component.prototype.removeLastPosition = function()
 {
 var row = this.row;
@@ -204,7 +220,9 @@ if ( row.childNodes.length > 0 )
 };
 
 
-
+/**
+ * Toggle a position (to play the sound, or not).
+ */
 Component.prototype.togglePosition = function( event )
 {
 var element = event.target;
@@ -227,6 +245,9 @@ Menu.removeSelectedBeat();
 };
 
 
+/**
+ * Toggle the mute state (if it plays this component, or not).
+ */
 Component.prototype.toggleMute = function()
 {
 if ( this.is_muted )
@@ -243,6 +264,9 @@ else
 };
 
 
+/**
+ * Play the beat associated.
+ */
 Component.prototype.playSounds = function()
 {
 if ( this.is_muted )
@@ -278,5 +302,4 @@ for (var a = 0 ; a < this.beat.length ; a++)
 
 
 window.Component = Component;
-
 }(window));

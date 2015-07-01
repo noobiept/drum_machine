@@ -16,6 +16,9 @@ var SELECTED_BEAT = null;       // reference to the html element of the current 
 var BEATS_CONTAINER = null;
 
 
+/**
+ * Initialization of the menu.
+ */
 Menu.init = function()
 {
 var container = document.querySelector( '#DrumMenu' );
@@ -151,6 +154,9 @@ else
 };
 
 
+/**
+ * Remove the selected beat highlight.
+ */
 Menu.removeSelectedBeat = function()
 {
 if ( SELECTED_BEAT )
@@ -218,5 +224,4 @@ BEATS_CONTAINER.appendChild( beat );
 
 
 window.Menu = Menu;
-
 }(window));

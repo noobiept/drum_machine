@@ -1,9 +1,15 @@
+/**
+ * Return a deep clone of an object.
+ */
 function deepClone( obj )
 {
 return JSON.parse( JSON.stringify( obj ) );
 }
 
 
+/**
+ * Identifier code of the keyboard keys in a keydown/keyup event (The value of event.keyCode).
+ */
 var EVENT_KEY = {
 
     backspace  : 8,
@@ -73,11 +79,9 @@ var EVENT_KEY = {
 };
 
 
-
-/*
+/**
  * For jquery ajax to work (server only)
  */
-
 jQuery(document).ajaxSend(function(event, xhr, settings) {
     function getCookie(name) {
         var cookieValue = null;

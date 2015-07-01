@@ -13,6 +13,9 @@ this.is_opened = false;
 }
 
 
+/**
+ * Show a text message for a short time.
+ */
 Message.prototype.show = function( text )
 {
 var _this = this;
@@ -28,17 +31,25 @@ this.element.innerHTML = text;
 this.timeout_f = window.setTimeout( function() { _this.hide(); }, 2000 );
 };
 
+
+/**
+ * Clear the message.
+ */
 Message.prototype.hide = function()
 {
 this.is_opened = false;
 this.element.innerHTML = '';
 };
 
+
+/**
+ * Remove the message html element.
+ */
 Message.prototype.remove = function()
 {
 this.container.removeChild( this.element );
 };
 
-window.Message = Message;
 
+window.Message = Message;
 }(window));

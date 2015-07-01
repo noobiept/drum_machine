@@ -14,6 +14,10 @@ var AUDIO_SOURCES = [];
 var CONTEXT = null;
 var GAIN = 1;
 
+
+/**
+ * Load all the audio files necessary for the drum machine.
+ */
 Audio.load = function( callback, baseUrl )
 {
 CONTEXT = getContext();
@@ -49,7 +53,9 @@ for (var a = 0 ; a < MANIFEST.length ; a++)
 };
 
 
-
+/**
+ * Load an audio file from a given url.
+ */
 function loadAudio( id, url )
 {
 var request = new XMLHttpRequest();
@@ -82,6 +88,14 @@ request.onload = function()
 request.send();
 }
 
+
+/**
+ * Play a sound.
+ *
+ * @param buffer The audio buffer to play.
+ * @param time Time delay until the sound is played.
+ * @param gain The gain/volume of the sound (from 0 to 1).
+ */
 Audio.playSound = function( buffer, time, gain )
 {
 var source = CONTEXT.createBufferSource();
@@ -105,6 +119,9 @@ AUDIO_SOURCES.push( source );
 };
 
 
+/**
+ * Remove an audio source after it has finished playing.
+ */
 function removeAudioSource( event )
 {
 var source = event.srcElement;
@@ -115,6 +132,9 @@ AUDIO_SOURCES.splice( position, 1 );
 }
 
 
+/**
+ * Stop playing all the sounds.
+ */
 Audio.stop = function()
 {
 for (var a = 0 ; a < AUDIO_SOURCES.length ; a++)
@@ -128,8 +148,9 @@ AUDIO_SOURCES.length = 0;
 };
 
 
-
-
+/**
+ * Get an audio buffer of a given id.
+ */
 Audio.get = function( sound )
 {
 return AUDIO_BUFFERS[ sound ];
@@ -164,25 +185,32 @@ return context;
 }
 
 
+/**
+ * Returns the current time (reference time for playing the sounds).
+ */
 Audio.getCurrentTime = function()
 {
 return CONTEXT.currentTime;
 };
 
 
+/**
+ * Set the global gain/volume of the application.
+ */
 Audio.setGain = function( gain )
 {
 GAIN = gain;
 };
 
 
+/**
+ * Get the current global gain/volume set.
+ */
 Audio.getGain = function()
 {
 return GAIN;
 };
 
 
-
 window.Audio = Audio;
-
 }(window));

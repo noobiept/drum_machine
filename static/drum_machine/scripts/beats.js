@@ -96,7 +96,6 @@ var CURRENT_BEAT = null;    // current active beat
  */
 Beats.init = function()
 {
-
     // load the user's beats
     // if there's no one logged in, then use the example beats
 var container = document.querySelector( '#BeatsContainer' );
@@ -168,6 +167,10 @@ $.ajax({
 };
 
 
+/**
+ * Add the example beats to the list of beats available.
+ * This is done either when the user isn't logged in, or when he doesn't have any beats currently.
+ */
 Beats.addExampleBeats = function()
 {
 var exampleNames = Object.keys( EXAMPLE_BEATS );
@@ -181,7 +184,7 @@ for (var a = 0 ; a < exampleNames.length ; a++)
 
 
 /**
- * When a user doesn't have any beats, we add to his account the example beats (so serve as a base for his own).
+ * When a user doesn't have any beats, we add to his account the example beats (to serve as a base for his own).
  */
 Beats.saveExampleBeats = function()
 {
@@ -203,7 +206,9 @@ $.ajax({
 };
 
 
-
+/**
+ * Get a list of names of the beats that are currently loaded.
+ */
 Beats.getNames = function()
 {
 return Object.keys( ALL_BEATS );
@@ -262,5 +267,4 @@ ALL_BEATS[ name ] = beat;
 
 
 window.Beats = Beats;
-
 }(window));

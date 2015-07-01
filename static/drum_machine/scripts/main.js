@@ -1,7 +1,10 @@
     // these variables can be changed in server templates
-var STARTING_BEAT_ID = null;
+var STARTING_BEAT_ID = null;    // the id of a beat to load and show at the start
 
 
+/**
+ * The start of the application.
+ */
 window.onload = function()
 {
 try {
