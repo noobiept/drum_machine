@@ -33,6 +33,12 @@ setSorts();
 function setSorts()
 {
 var table = document.querySelector( '#BeatsTable' );
+
+if ( !table )
+    {
+    return;
+    }
+
 var headers = table.querySelectorAll( 'th' );
 
 var click_f = function( position )

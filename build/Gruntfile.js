@@ -25,8 +25,8 @@ grunt.initConfig({
                 expand: true,
                 cwd: '../',
                 src: [
-                    'accounts/*.py',
-                    'drum_machine/*.py',
+                    'accounts/**/*.py',
+                    'drum_machine/**/*.py',
                     'static/**',
                     'templates/**',
                     'manage.py',
