@@ -4,6 +4,7 @@
     {% load static %}
     <script type="text/javascript" src="{% static 'drum_machine/libraries/jquery-2.1.4.min.js' %}"></script>
 
+    <!-- build:js /static/drum_machine/scripts/min.js -->
     <script type="text/javascript" src="{% static 'drum_machine/scripts/utilities.js' %}"></script>
     <script type="text/javascript" src="{% static 'drum_machine/scripts/beats.js' %}"></script>
     <script type="text/javascript" src="{% static 'drum_machine/scripts/audio.js' %}"></script>
@@ -12,6 +13,7 @@
     <script type="text/javascript" src="{% static 'drum_machine/scripts/menu.js' %}"></script>
     <script type="text/javascript" src="{% static 'drum_machine/scripts/component.js' %}"></script>
     <script type="text/javascript" src="{% static 'drum_machine/scripts/main.js' %}"></script>
+    <!-- /build -->
 {% endblock %}
 
 {% block content %}

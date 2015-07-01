@@ -4,6 +4,11 @@
 
     For the full list of settings and their values, see
     https://docs.djangoproject.com/en/1.8/ref/settings/
+
+    Needs some environment strings in the live server.
+
+        LIVE -- To know its in the live server.
+        SECRET_KEY -- The secret key to be used.
 """
 import os
 import os.path
@@ -14,7 +19,11 @@ BASE_DIR = os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) )
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get( 'LIVE' ):
+    DEBUG = False
+
+else:
+    DEBUG = True
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -119,5 +128,14 @@ STATICFILES_DIRS = (
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = '/'
 
-
 AUTH_USER_MODEL = 'accounts.Account'
+
+
+if not DEBUG:
+
+    # Parse database configuration from $DATABASE_URL
+    import dj_database_url
+    DATABASES['default'] =  dj_database_url.config()
+
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
