@@ -21,6 +21,6 @@ if ( document.activeElement.tagName === 'INPUT' )
 
 if ( key == EVENT_KEY.space )
     {
-    Menu.playClick();
+    DrumMachine.alternatePlayState();
     }
 }

@@ -5,6 +5,7 @@ function DrumMachine()
 
 }
 
+var IS_PLAYING = false;
 var INTERVAL_F;
 var INDIVIDUAL_NOTE_F;
 
@@ -55,6 +56,26 @@ for (var a = 0 ; a < COMPONENTS.length ; a++)
 }
 
 
+/**
+ * Change to the other state. If the drum machine is playing, then we stop it. If its stopped then we start playing.
+ */
+DrumMachine.alternatePlayState = function()
+{
+if ( IS_PLAYING )
+    {
+    DrumMachine.stop();
+    }
+
+else
+    {
+    DrumMachine.startPlayLoop();
+    }
+};
+
+
+/**
+ * Start playing the beat in a loop.
+ */
 DrumMachine.startPlayLoop = function()
 {
 DrumMachine.stop();
@@ -87,11 +108,24 @@ INDIVIDUAL_NOTE_F = window.setInterval( emphasizeCurrentNote, interval / totalNo
     // start right away
 emphasizeCurrentNote();
 start();
+
+IS_PLAYING = true;
+Menu.setPlayState( IS_PLAYING );
 };
 
 
+/**
+ * Stop playing the current beat.
+ */
 DrumMachine.stop = function()
 {
+if ( !IS_PLAYING )
+    {
+    return;
+    }
+
+IS_PLAYING = false;
+
 window.clearInterval( INTERVAL_F );
 window.clearInterval( INDIVIDUAL_NOTE_F );
 
@@ -101,8 +135,8 @@ for (var a = COMPONENTS.length - 1 ; a >= 0 ; a--)
     COMPONENTS[ a ].clearEmphasis();
     }
 
-
 Audio.stop();
+Menu.setPlayState( IS_PLAYING );
 };
 
 

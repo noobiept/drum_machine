@@ -5,7 +5,6 @@ function Menu()
 
 }
 
-var IS_PLAYING = false;
 var PLAY_ELEMENT = null;
 var BEATS_ELEMENT = null;
 var BEATS_VALUE_ELEMENT = null;
@@ -24,10 +23,8 @@ var container = document.querySelector( '#DrumMenu' );
     // play button
 var play = container.querySelector( '#Play' );
 
-IS_PLAYING = false;
 play.innerHTML = 'Play';
-
-play.onclick = Menu.playClick;
+play.onclick = DrumMachine.alternatePlayState;
 
 
     // volume
@@ -57,7 +54,7 @@ tempo.onchange = function( event )
     {
     Beats.getCurrent().tempo = tempo.value;
 
-    Menu.stopPlaying();
+    DrumMachine.stop();
     };
 tempo.oninput = function( event )
     {
@@ -71,7 +68,7 @@ var beatsValue = container.querySelector( '#BeatsPerPatternValue' );
 
 beats.onchange = function( event )
     {
-    Menu.stopPlaying();
+    DrumMachine.stop();
     DrumMachine.setBeatsPerPattern( beats.value );
     Menu.removeSelectedBeat();
     };
@@ -87,7 +84,7 @@ var stepsValue = container.querySelector( '#StepsPerBeatValue' );
 
 steps.onchange = function( event )
     {
-    Menu.stopPlaying();
+    DrumMachine.stop();
     DrumMachine.setStepsPerBeat( steps.value );
     Menu.removeSelectedBeat();
     };
@@ -137,31 +134,21 @@ TEMPO_VALUE_ELEMENT = tempoValue;
 };
 
 
-Menu.playClick = function()
+/**
+ * Update the menu controls, according to the drum machine's current state.
+ */
+Menu.setPlayState = function( isPlaying )
 {
-if ( IS_PLAYING )
+if ( isPlaying )
     {
-    PLAY_ELEMENT.innerHTML = 'Play';
-    IS_PLAYING = false;
-    DrumMachine.stop();
+    PLAY_ELEMENT.innerHTML = 'Stop';
     }
 
 else
     {
-    IS_PLAYING = true;
-    PLAY_ELEMENT.innerHTML = 'Stop';
-
-    DrumMachine.startPlayLoop();
+    PLAY_ELEMENT.innerHTML = 'Play';
     }
 };
-
-Menu.stopPlaying = function()   //HERE shouldn't be in the menu
-{
-IS_PLAYING = false;
-PLAY_ELEMENT.innerHTML = 'Play';
-DrumMachine.stop();
-};
-
 
 
 Menu.removeSelectedBeat = function()
@@ -208,7 +195,7 @@ STEPS_ELEMENT.value           = currentBeat.steps_per_beat;
 STEPS_VALUE_ELEMENT.innerHTML = currentBeat.steps_per_beat;
 TEMPO_ELEMENT.value           = currentBeat.tempo;
 TEMPO_VALUE_ELEMENT.innerHTML = currentBeat.tempo;
-Menu.stopPlaying();
+DrumMachine.stop();
 };
 
 

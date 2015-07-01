@@ -27,7 +27,7 @@ var row = document.createElement( 'tr' );
 var header = document.createElement( 'th' );
 
 var nameSelector = document.createElement( 'select' );
-var soundNames = _.keys( availableSounds );
+var soundNames = Object.keys( availableSounds );
 
 for (var a = 0 ; a < soundNames.length ; a++)
     {

@@ -122,7 +122,7 @@ $.ajax({
         {
         container.removeChild( loading );
 
-        if ( !_.isArray( data ) )
+        if ( !Array.isArray( data ) )
             {
             console.log( 'error loading beats, data not an array.' );
             return;
@@ -206,7 +206,7 @@ $.ajax({
 
 Beats.getNames = function()
 {
-return _.keys( ALL_BEATS );
+return Object.keys( ALL_BEATS );
 };
 
 
