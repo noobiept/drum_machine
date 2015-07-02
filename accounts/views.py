@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import login as django_login
 
 from accounts.forms import MyUserCreationForm, PrivateMessageForm
 from accounts.models import PrivateMessage
@@ -19,6 +20,8 @@ def new_account( request ):
         if form.is_valid():
 
             form.save()
+            utilities.set_message( request, 'Account created!' )
+
             return HttpResponseRedirect( reverse( 'accounts:login' ) )
 
     else:
@@ -29,6 +32,14 @@ def new_account( request ):
     }
 
     return render( request, 'accounts/new_account.html', context )
+
+
+def login( request ):
+
+    context = {}
+    utilities.get_message( request, context )
+
+    return django_login( request, 'accounts/login.html', extra_context= context )
 
 
 def user_page( request, username ):
@@ -73,6 +84,7 @@ def send_private_message( request, username ):
             message = PrivateMessage( receiver= user, sender= request.user, title= title, content= content )
             message.save()
 
+            utilities.set_message( request, 'Message sent!' )
 
             return HttpResponseRedirect( user.get_url() )
 
@@ -156,9 +168,9 @@ def set_moderator( request, username ):
 
 def password_changed( request ):
 
-    utilities.set_message( request, 'Password changed' )
+    utilities.set_message( request, 'Password changed!' )
 
-    return HttpResponseRedirect( reverse( 'home' ) )
+    return HttpResponseRedirect( reverse( 'accounts:user_page', kwargs= { 'username': request.user.username } ) )
 
 
 def all_beats( request, username ):
