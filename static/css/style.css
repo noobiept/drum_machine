@@ -119,3 +119,8 @@ body
     background-color: rgba(50, 50, 50, 0.1);
     padding: 0 15px;
     }
+
+#BeatsTable tr:nth-child(odd)
+    {
+    background-color: rgba(150, 150, 150, 0.1);
+    }
