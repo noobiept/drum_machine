@@ -10,5 +10,5 @@ An account is required to save the beats. All the beats are public (from all the
 Libraries
 =========
 
-- django -- 1.8
-- jquery -- 2.1
+- django -- 1.10
+- jquery -- 3.2
