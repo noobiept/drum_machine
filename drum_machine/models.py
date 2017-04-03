@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
+
 
 def dateCreated():
     return timezone.localtime( timezone.now() )
@@ -9,7 +10,7 @@ def dateCreated():
 
 class Beat( models.Model ):
 
-    user = models.ForeignKey( settings.AUTH_USER_MODEL )
+    user = models.ForeignKey( settings.AUTH_USER_MODEL, on_delete= models.CASCADE )
     name = models.CharField( max_length= 25 )
     date_created = models.DateTimeField( help_text= 'Date Created', default= dateCreated )
     description = models.CharField( max_length= 900 )
@@ -40,6 +41,6 @@ class Beat( models.Model ):
 
 class Vote( models.Model ):
 
-    user = models.ForeignKey( settings.AUTH_USER_MODEL )
-    beat = models.ForeignKey( Beat )
+    user = models.ForeignKey( settings.AUTH_USER_MODEL, on_delete= models.CASCADE )
+    beat = models.ForeignKey( Beat, on_delete= models.CASCADE )
     score = models.IntegerField()

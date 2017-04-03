@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.utils import timezone
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 def dateCreated():
@@ -19,8 +19,8 @@ class Account( AbstractUser ):
 
 class PrivateMessage( models.Model ):
 
-    receiver = models.ForeignKey( settings.AUTH_USER_MODEL )
-    sender = models.ForeignKey( settings.AUTH_USER_MODEL, related_name= 'sender' )
+    receiver = models.ForeignKey( settings.AUTH_USER_MODEL, on_delete= models.CASCADE )
+    sender = models.ForeignKey( settings.AUTH_USER_MODEL, related_name= 'sender', on_delete= models.CASCADE )
     title = models.TextField( max_length= 100 )
     content = models.TextField( max_length= 500 )
     date_created = models.DateTimeField( help_text= 'Date Created', default= dateCreated )

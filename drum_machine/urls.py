@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib import admin
 
 import drum_machine.views
+import accounts.urls
 
 
 urlpatterns = [
@@ -16,9 +17,6 @@ urlpatterns = [
     url( r'^rate_beat/(?P<beatId>\w+)/(?P<rateValue>\d+)$', drum_machine.views.rate_beat, name= 'rate_beat' ),
     url( r'^get_beat/(?P<beatId>\w+)$', drum_machine.views.get_beat, name= 'get_beat' ),
 
-
-    url( r'^accounts/', include( 'accounts.urls', namespace= 'accounts', app_name= 'accounts' ) ),
-
-
+    url( r'^accounts/', include( (accounts.urls, 'accounts') ) ),
     url( r'^admin/', include( admin.site.urls ) ),
 ]

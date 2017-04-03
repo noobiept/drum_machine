@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.http import Http404, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login as django_login
 
