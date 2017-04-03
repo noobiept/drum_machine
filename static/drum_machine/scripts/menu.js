@@ -1,9 +1,6 @@
 (function(window)
 {
-function Menu()
-{
-
-}
+var Menu = {};
 
 var PLAY_ELEMENT = null;
 var BEATS_ELEMENT = null;

@@ -4,7 +4,6 @@ BeatsTable.init();
 });
 
 
-
 var BeatsTable;
 (function(BeatsTable) {
 
@@ -127,7 +126,6 @@ for (a = 0 ; a < data.length ; a++)
 }
 
 
-
 /**
  * Rating widget (off the beats).
  */
@@ -170,4 +168,3 @@ parent.appendChild( rate );
 
 
 })(BeatsTable || (BeatsTable = {}));
-

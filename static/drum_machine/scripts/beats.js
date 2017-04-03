@@ -1,9 +1,6 @@
 (function(window)
 {
-function Beats()
-{
-
-}
+var Beats = {};
 
 var EXAMPLE_BEATS = {
     beat1: {

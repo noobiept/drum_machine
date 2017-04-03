@@ -1,9 +1,6 @@
 (function(window)
 {
-function Audio()
-{
-
-}
+var Audio = {};
 
 var MANIFEST = null;
 var SOUNDS_LOADED = 0;

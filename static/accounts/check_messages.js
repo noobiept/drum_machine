@@ -1,11 +1,9 @@
-var CheckMessages = (function()
+(function(window)
 {
-function C()
-{
+var CheckMessages = {};
 
-}
 
-C.init = function()
+CheckMessages.init = function()
 {
 setClickableRows();
 setContentPreview();
@@ -45,10 +43,8 @@ for (var a = 0 ; a < elements.length ; a++)
 }
 
 
-return C;
-
-}());
+window.CheckMessages = CheckMessages;
+}(window));
 
 
 window.addEventListener( 'load', CheckMessages.init, false );
-

@@ -1,9 +1,6 @@
 (function(window)
 {
-function DrumMachine()
-{
-
-}
+var DrumMachine = {};
 
 var IS_PLAYING = false;
 var INTERVAL_F;

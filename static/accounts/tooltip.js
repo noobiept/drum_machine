@@ -1,49 +1,48 @@
-(function(window)
+class Tooltip
 {
-function Tooltip( referenceElement, text )
-{
-var _this = this;
-
-var element = document.createElement( 'div' );
-element.className = 'tooltip';
-element.innerHTML = text;
-
-referenceElement.onmouseover = function()
+constructor( referenceElement, text )
     {
-    _this.show();
-    };
+    var _this = this;
 
-referenceElement.onmouseout = function()
+    var element = document.createElement( 'div' );
+    element.className = 'tooltip';
+    element.innerHTML = text;
+
+    referenceElement.onmouseover = function()
+        {
+        _this.show();
+        };
+
+    referenceElement.onmouseout = function()
+        {
+        _this.hide();
+        };
+
+    referenceElement.onmousemove = function( event )
+        {
+        _this.moveTo( event.clientX + 20, event.clientY + 20 );
+        };
+
+
+    this.element = element;
+    }
+
+
+show()
     {
-    _this.hide();
-    };
+    document.body.appendChild( this.element );
+    }
 
-referenceElement.onmousemove = function( event )
+
+hide()
     {
-    _this.moveTo( event.clientX + 20, event.clientY + 20 );
-    };
+    document.body.removeChild( this.element );
+    }
 
 
-this.element = element;
+moveTo( x, y )
+    {
+    this.element.style.left = x + 'px';
+    this.element.style.top = y + 'px';
+    }
 }
-
-Tooltip.prototype.show = function()
-{
-document.body.appendChild( this.element );
-};
-
-Tooltip.prototype.hide = function()
-{
-document.body.removeChild( this.element );
-};
-
-Tooltip.prototype.moveTo = function( x, y )
-{
-this.element.style.left = x + 'px';
-this.element.style.top = y + 'px';
-};
-
-
-window.Tooltip = Tooltip;
-
-}(window));
