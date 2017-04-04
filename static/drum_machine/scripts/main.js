@@ -7,8 +7,16 @@ var STARTING_BEAT_ID = null;    // the id of a beat to load and show at the star
  */
 window.onload = function()
 {
+var loading = document.createElement( 'div' );
+loading.innerHTML = 'Loading..';
+
+document.body.appendChild( loading );
+
 try {
-    Audio.load( DrumMachine.init, '/static/' );
+    Audio.load( function() {
+        DrumMachine.init();
+        document.body.removeChild( loading );
+    }, '/static/' );
 }
 
 catch( error )
