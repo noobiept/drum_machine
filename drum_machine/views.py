@@ -120,7 +120,12 @@ def get_beat( request, beatId ):
         return HttpResponseBadRequest( "Didn't find a beat with that id." )
 
     else:
-        return HttpResponse( beat.description )
+        response = {
+            'username': beat.user.username,
+            'description': beat.description
+        }
+
+        return JsonResponse( response )
 
 
 def load_beats( request ):

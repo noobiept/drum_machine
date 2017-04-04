@@ -165,7 +165,11 @@ if ( window.STARTING_BEAT_ID !== null )
             },
         success: function( data, textStatus, jqXHR )
             {
-            var description = JSON.parse( data );
+            var description = JSON.parse( data.description );
+
+                // we're loading a beat potentially from a different user, that can have the same name as one of our own
+                // rename the beat name to include the username to avoid collisions
+            description.name = data.username + "/" + description.name;
 
             Beats.add( description );
             DrumMachine.selectBeat( description.name );
@@ -326,17 +330,24 @@ setBeatCssClass( beat );
  */
 DrumMachine.saveBeat = function( name )
 {
-var pattern = /\s*\w+\s*/;
+name = name.trim();
+var pattern = /^[a-zA-Z0-9 ]+$/;
 
 if ( !pattern.test( name ) )
     {
-    SAVE_MESSAGE.show( 'Need to add a name.' );
+    SAVE_MESSAGE.show( 'Need to add a name (or using invalid characters).' );
     return;
     }
 
 if ( name.length > MAX_NAME )
     {
     SAVE_MESSAGE.show( "Can't have a name with so many characters (max: " + MAX_NAME + ').' );
+    return;
+    }
+
+if ( Beats.alreadyExists( name ) )
+    {
+    SAVE_MESSAGE.show( "A beat with that name already exists. Try a different name." );
     return;
     }
 

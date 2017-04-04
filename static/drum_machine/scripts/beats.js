@@ -263,5 +263,19 @@ ALL_BEATS[ name ] = beat;
 };
 
 
+/**
+ * Check if a beat with the given name already exists.
+ */
+Beats.alreadyExists = function( name )
+{
+if ( ALL_BEATS[ name ] )
+    {
+    return true;
+    }
+
+return false;
+};
+
+
 window.Beats = Beats;
 }(window));
