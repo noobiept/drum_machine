@@ -6,5 +6,5 @@
 {% endblock %}
 
 {% block content %}
-    {% include "beats_table.html" with title="All Beats" %}
+    {% include "beats_table.html" with title=user.username|add:" Beats" %}
 {% endblock %}
